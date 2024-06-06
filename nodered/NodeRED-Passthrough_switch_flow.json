@@ -1,0 +1,153 @@
+[
+  {
+    "id": "bb36989e2aba46d8",
+    "type": "tab",
+    "label": "Passthrough switch flow",
+    "disabled": false,
+    "info": "Flow that disables the Multiplus charger, even in \"Charger only\", to provide a passthrough switch. ",
+    "env": []
+  },
+  {
+    "id": "3dfb79318d0b452e",
+    "type": "debug",
+    "z": "bb36989e2aba46d8",
+    "name": "debug",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 610,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "1775b6d192a03c39",
+    "type": "victron-output-settings",
+    "z": "bb36989e2aba46d8",
+    "service": "com.victronenergy.settings",
+    "path": "/Settings/SystemSetup/MaxChargeCurrent",
+    "serviceObj": {
+      "service": "com.victronenergy.settings",
+      "name": "Venus settings"
+    },
+    "pathObj": {
+      "path": "/Settings/SystemSetup/MaxChargeCurrent",
+      "type": "float",
+      "name": "DVCC system max charge current (A DC)",
+      "writable": true
+    },
+    "name": "",
+    "onlyChanges": false,
+    "x": 730,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "8beff627d84bb6d0",
+    "type": "victron-input-custom",
+    "z": "bb36989e2aba46d8",
+    "service": "com.victronenergy.settings",
+    "path": "/Settings/SystemSetup/MaxChargeCurrent",
+    "serviceObj": {
+      "service": "com.victronenergy.settings",
+      "name": "com.victronenergy.settings"
+    },
+    "pathObj": {
+      "path": "/Settings/SystemSetup/MaxChargeCurrent",
+      "name": "/Settings/SystemSetup/MaxChargeCurrent",
+      "type": "number"
+    },
+    "name": "DVCC system max charge current",
+    "onlyChanges": true,
+    "roundValues": "no",
+    "x": 340,
+    "y": 60,
+    "wires": [
+      [
+        "3dfb79318d0b452e"
+      ]
+    ]
+  },
+  {
+    "id": "3e89c7f5841613fb",
+    "type": "victron-input-digitalinput",
+    "z": "bb36989e2aba46d8",
+    "service": "com.victronenergy.digitalinput/3",
+    "path": "/State",
+    "serviceObj": {
+      "service": "com.victronenergy.digitalinput/3",
+      "name": "Passthrough_switch"
+    },
+    "pathObj": {
+      "path": "/State",
+      "type": "enum",
+      "name": "Digital input state",
+      "enum": {
+        "0": "low",
+        "1": "high",
+        "2": "off",
+        "3": "on",
+        "4": "no",
+        "5": "yes",
+        "6": "open",
+        "7": "closed",
+        "8": "ok",
+        "9": "alarm",
+        "10": "running",
+        "11": "stopped"
+      }
+    },
+    "initial": "",
+    "name": "Passthrough switch",
+    "onlyChanges": true,
+    "x": 130,
+    "y": 160,
+    "wires": [
+      [
+        "d2a9fc7a8db2949f"
+      ]
+    ]
+  },
+  {
+    "id": "d2a9fc7a8db2949f",
+    "type": "change",
+    "z": "bb36989e2aba46d8",
+    "name": "Translate",
+    "rules": [
+      {
+        "t": "change",
+        "p": "payload",
+        "pt": "msg",
+        "from": "7",
+        "fromt": "num",
+        "to": "0",
+        "tot": "num"
+      },
+      {
+        "t": "change",
+        "p": "payload",
+        "pt": "msg",
+        "from": "6",
+        "fromt": "num",
+        "to": "-1",
+        "tot": "num"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 340,
+    "y": 160,
+    "wires": [
+      [
+        "1775b6d192a03c39"
+      ]
+    ]
+  }
+]

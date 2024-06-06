@@ -1,0 +1,11 @@
+# get GPS from router
+
+/usr/bin/socat UDP4-RECV:8500 pty,link=/dev/ttyUDPGPS,raw,nonblock,echo=0,b115200 &
+
+while [ `ps|grep gps_dbus|grep -v grep|wc -l` -eq 0 ]
+do
+sleep 1
+/opt/victronenergy/gps-dbus/gps_dbus -s /dev/ttyUDPGPS -b 115200 -t 0
+done &
+
+exit 0

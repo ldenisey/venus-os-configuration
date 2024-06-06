@@ -1,0 +1,167 @@
+[
+  {
+    "id": "b03dc1efeae77d06",
+    "type": "tab",
+    "label": "Inverter switch flow",
+    "disabled": false,
+    "info": "Flow that maps a digital input value to a Multiplus switch value to be able to control it with a switch.",
+    "env": []
+  },
+  {
+    "id": "ba0e5ec4a9d022ac",
+    "type": "victron-input-digitalinput",
+    "z": "b03dc1efeae77d06",
+    "service": "com.victronenergy.digitalinput/4",
+    "path": "/State",
+    "serviceObj": {
+      "service": "com.victronenergy.digitalinput/4",
+      "name": "Inverter_switch"
+    },
+    "pathObj": {
+      "path": "/State",
+      "type": "enum",
+      "name": "Digital input state",
+      "enum": {
+        "0": "low",
+        "1": "high",
+        "2": "off",
+        "3": "on",
+        "4": "no",
+        "5": "yes",
+        "6": "open",
+        "7": "closed",
+        "8": "ok",
+        "9": "alarm",
+        "10": "running",
+        "11": "stopped"
+      }
+    },
+    "initial": "",
+    "name": "Inverter switch input",
+    "onlyChanges": true,
+    "x": 210,
+    "y": 160,
+    "wires": [
+      [
+        "b9b98d8719ca5c54"
+      ]
+    ]
+  },
+  {
+    "id": "c9ecf90c5c2da47c",
+    "type": "victron-output-vebus",
+    "z": "b03dc1efeae77d06",
+    "service": "com.victronenergy.vebus/276",
+    "path": "/Mode",
+    "serviceObj": {
+      "service": "com.victronenergy.vebus/276",
+      "name": "alfonce-multiplus"
+    },
+    "pathObj": {
+      "path": "/Mode",
+      "type": "enum",
+      "name": "Switch Position",
+      "remarks": "<p>Note that <tt>/ModeIsAdjustable</tt> needs to be set to 1.</p> ",
+      "enum": {
+        "1": "Charger Only",
+        "2": "Inverter Only",
+        "3": "On",
+        "4": "Off"
+      },
+      "writable": true
+    },
+    "initial": "",
+    "name": "Multiplus switch",
+    "onlyChanges": false,
+    "x": 680,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "b9b98d8719ca5c54",
+    "type": "change",
+    "z": "b03dc1efeae77d06",
+    "name": "Translate",
+    "rules": [
+      {
+        "t": "change",
+        "p": "payload",
+        "pt": "msg",
+        "from": "7",
+        "fromt": "num",
+        "to": "1",
+        "tot": "num"
+      },
+      {
+        "t": "change",
+        "p": "payload",
+        "pt": "msg",
+        "from": "6",
+        "fromt": "num",
+        "to": "3",
+        "tot": "num"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 440,
+    "y": 160,
+    "wires": [
+      [
+        "c9ecf90c5c2da47c"
+      ]
+    ]
+  },
+  {
+    "id": "42ea7ac29eac70af",
+    "type": "victron-input-vebus",
+    "z": "b03dc1efeae77d06",
+    "service": "com.victronenergy.vebus/276",
+    "path": "/Mode",
+    "serviceObj": {
+      "service": "com.victronenergy.vebus/276",
+      "name": "alfonce-multiplus"
+    },
+    "pathObj": {
+      "path": "/Mode",
+      "type": "enum",
+      "name": "Switch Position",
+      "enum": {
+        "1": "Charger Only",
+        "2": "Inverter Only",
+        "3": "On",
+        "4": "Off"
+      }
+    },
+    "initial": "",
+    "name": "",
+    "onlyChanges": true,
+    "x": 340,
+    "y": 60,
+    "wires": [
+      [
+        "fa6f77d25e1b1c73"
+      ]
+    ]
+  },
+  {
+    "id": "fa6f77d25e1b1c73",
+    "type": "debug",
+    "z": "b03dc1efeae77d06",
+    "name": "debug",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 650,
+    "y": 60,
+    "wires": []
+  }
+]
