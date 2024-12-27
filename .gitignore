@@ -1,1 +1,6 @@
-/shell/data/home/nodered/.node-red/settings-user.js
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
