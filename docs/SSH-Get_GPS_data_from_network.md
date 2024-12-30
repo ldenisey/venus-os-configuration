@@ -20,7 +20,7 @@ In *Host information*, set the hostname of your GX device, choose UDP protocol a
 
 Create or append the file [`/data/rc.local`](../shell/data/rc.local) on your Venus OS device with :
 
-```bash
+``` bash
   # Configure as you wish
   UDPGPS_PORT=8500
   UDPGPS_NAME='UDP GPS'

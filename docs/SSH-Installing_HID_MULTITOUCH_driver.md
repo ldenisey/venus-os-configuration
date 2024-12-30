@@ -24,7 +24,7 @@ Touch your screen in top left, top right, bottom right, bottom left corners then
 
 If the coordinates of every touch are the same, i.e. `X = 1024 Y =  600` in the following exemple, you probably need the driver :
 
-``` bash
+``` console
     xres = 1024, yres = 600
     Took 1 samples...
     Top left : X = 1024 Y =  600

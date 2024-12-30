@@ -1,6 +1,6 @@
 # Venus OS configuration
 
-Various configuration for Venus OS based devices, by the menu :
+Various guides for Venus OS based devices, by the menu :
 
 * Node RED
   * [Activating Node RED](docs/GuiV1-Access_NodeRED.md)
@@ -22,6 +22,9 @@ Various configuration for Venus OS based devices, by the menu :
 
 
 * [Reset Venus OS firmware](docs/GuiV2-Reset_Venus_OS.md)
+
+
+* [Debugging grid meter rs485 connection](docs/SSH-Debugging_grid_meter.md)
 
 
 If I saved you some time and made your day better, [consider buying me a coffee :-)](https://buymeacoffee.com/ldeniseyw)
