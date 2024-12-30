@@ -15,7 +15,6 @@ Plug the grid meter on your Venus device and check the log for its usb connectio
 The following is a valid USB FTDI connection :
 
 ``` console
-    # dmesg
     [Sat Dec 28 19:08:10 2024] usb 3-1: new full-speed USB device number 7 using ohci-platform
     [Sat Dec 28 19:08:11 2024] usb 3-1: New USB device found, idVendor=0403, idProduct=6001, bcdDevice= 6.00
     [Sat Dec 28 19:08:11 2024] usb 3-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
@@ -45,7 +44,8 @@ If there is no service running, try and start it manually.
 
 ## Manual trigger of the dbus service
 
-Manual trigger of the dbus grid meter service for /dev/ttyUSB0 is done with :
+Dbus service is started by [dbus-cgwacs](https://github.com/victronenergy/dbus-cgwacs).
+Manual trigger for /dev/ttyUSB0 is done with :
 
 ``` bash
   /opt/victronenergy/dbus-cgwacs/dbus-cgwacs /dev/ttyUSB0
