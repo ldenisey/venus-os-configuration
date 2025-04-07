@@ -13,7 +13,7 @@ Follow the [switch configuration page](GuiV1-Configure_switch.md) to add a switc
 
 ### Inverter switch flow
 
-[Access Node RED](GuiV1-Access_NodeRED.md) and import [Inverter switch flow](../nodered/NodeRED-Inverter_switch_flow.json) :
+[Access Node RED](NodeRED-Activation.md) and import [Inverter switch flow](../nodered/NodeRED-Inverter_switch_flow.json) :
 
 ![Node_RED_Inverter_switch_conf](images/NodeRED-Inverter_switch_flow.png)
 
@@ -39,7 +39,7 @@ Follow the [switch configuration page](GuiV1-Configure_switch.md) to add a switc
 
 ### Node-RED Passthrough switch flow
 
-[Access Node RED](GuiV1-Access_NodeRED.md) and import [Passthrough switch flow](../nodered/NodeRED-Passthrough_switch_flow.json) :
+[Access Node RED](NodeRED-Activation.md) and import [Passthrough switch flow](../nodered/NodeRED-Passthrough_switch_flow.json) :
 
 ![Passthrough_switch_flow](images/NodeRED-Passthrough_switch_flow.png)
 

@@ -1,6 +1,6 @@
 # Configure a switch
 
-Plug a switch directly to any digital input of the GX device.
+Plug a switch to any digital input of the GX device.
 
 In the GX device console, in *Settings* -> *I/O* -> *Digital inputs*, configure the input as a "Door alarm" :
 

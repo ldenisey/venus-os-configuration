@@ -1,10 +1,10 @@
-# Access Node RED
+# Accessing Node RED
 
 Once [Node RED is activated](#activate-node-red), it is available at https://venus.local:1881 (use local IP address if needed).
 
 If prompted for login, user is *admin* and *password* is the one you have configured in *Settings* -> *General* -> *Set root password*.
 
-## Activate Node RED
+## Activating Node RED
 
 Node RED requires the installation of the "Large" version of the Venus OS firmware.
 To do so go to *Settings* -> *Firmware* -> *Online updates*, set *Image type* to *Large*,
@@ -16,7 +16,7 @@ After the update, enable *Node-RED* in *Settings* -> *Venus OS Large features* :
 
 ![](images/GuiV1-Node_RED_conf.png)
 
-## Bonus : activate dark mode
+## Activating dark mode
 
 Create a file [`/data/home/nodered/.node-red/settings-user.js`](../shell/data/home/nodered/.node-red/settings-user.js) on your device with :
 
@@ -28,4 +28,4 @@ module.exports = {
 }
 ```
 
-Reboot your device.
+Reboot your device with `reboot` command.

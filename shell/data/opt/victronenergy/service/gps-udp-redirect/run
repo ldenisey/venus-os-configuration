@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "*** starting $(basename $(dirname $(realpath $0))) ***"
+exec /usr/bin/socat -dd "udp4-recv:8500" "pty,link=/dev/ttyGPS,raw,nonblock,echo=0,b4800" 2>&1

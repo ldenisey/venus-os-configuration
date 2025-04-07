@@ -6,7 +6,7 @@ Here are some steps to investigate your grid meter rs485 usb connection.
 
 If you have a Carlo Gavazzi device, install and start their [configuration software](https://www.gavazzi.no/nedlasting/software/software-ucs/),
 plug your rs485 usb adapter and try and connect to it.
-If you see your device data, your hardware setup is fine.
+If you see your device data, your hardware is fine.
 
 ## Is usb well detected ?
 
@@ -85,4 +85,23 @@ Be aware that a failing execution like the following can in fact be self curing,
 ```
 
 Once you can manually start the dbus process, reboot the Venus device to check that it starts automatically.
+
+## Assign a custom serial-starter rule
+
+The grid meter is powered by 220V but the FTDI cable is powered by USB. Thus, when the grid meter is not plugged, Venus OS detects the cable but can't get any data to
+identify the appropriate service for it. By default, Venus OS loops forever through every possible dbus services that fails one after the other.
+To avoid this looping, you can assign a custom serial-starter rule based on the serial id of the FTDI cable to assign it to the dbus-cgwacs.
+
+To get the serial id of the FTDI cable, connected to /dev/ttyUSB0 :
+
+``` console
+    :~# udevadm info --query=property --name=/dev/ttyUSB0  | grep ID_SERIAL_SHORT
+    ID_SERIAL_SHORT=12345678
+```
+
+In file `/etc/udev/rules.d/serial-starter.rules`, the generic rule for *ENV{ID_MODEL}=="FT232R_USB_UART"* devices needs to be split in two :
+
+| before                                                                                               | after                                                                                                                                                                                                                                                                                  |
+|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_MODEL}=="FT232R_USB_UART", ENV{VE_SERVICE}="rs485:default" | ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_MODEL}=="FT232R_USB_UART", **ENV{ID_SERIAL_SHORT}!="12345678",** ENV{VE_SERVICE}="rs485:default"<br /><br />ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_MODEL}=="FT232R_USB_UART", **ENV{ID_SERIAL_SHORT}=="12345678",** ENV{VE_SERVICE}=**"rs485"** |
 
