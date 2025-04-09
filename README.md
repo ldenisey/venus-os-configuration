@@ -16,9 +16,9 @@ Various guides for Venus OS based devices, by the menu :
 
 
 * Third party touchscreens
-  * [Configuration](docs/Touchscreen-Configuration.md)
+  * [Main configurations](docs/Touchscreen-Configuration.md)
   * [Installating multitouch driver](docs/Touchscreen-Multitouch_driver.md)
-  * [Fixing screen sleep](docs/Touchscreen-Sleep.md)
+  * [Configuring screen sleep](docs/Touchscreen-Sleep.md)
 
 
 * GPS
@@ -28,5 +28,9 @@ Various guides for Venus OS based devices, by the menu :
 * Grid meter
   * [Debugging grid meter rs485 connection](docs/GridMeter-Configuration_debug.md)
 
+
+* Truma gaz regulators
+  * [Connect DuoC tank level sensor](docs/Truma-DuoC_tank_level_sensor_connection.md)
+  * [Connect EisEx heater](docs/Truma-EisEx_connection.md)
 
 If I saved you some time and made your day better, [consider buying me a coffee :-)](https://buymeacoffee.com/ldeniseyw)
