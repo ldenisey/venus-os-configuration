@@ -30,6 +30,10 @@ As of now, here are the screens and their compatibilty status :
 | MPI5001 | No | No | http://www.lcdwiki.com/5inch_HDMI_Display-B |
 | MPI1001 | No | No | http://www.lcdwiki.com/10.1inch_HDMI_Display-H |
 
+"Single touch = No" => [Multitouch driver installation](./Touchscreen-Multitouch_driver.md) required  
+"Backlight = Yes" => [Backlight control configuration](./Touchscreen-Sleep.md#backlight-controllable-touchscreens-fix) required  
+"Backlight = No" => [Gui V1 fix](./Touchscreen-Sleep.md#gui-v1-fix) or [Gui V2 workaround](./Touchscreen-Sleep.md#gui-v2-workaround) required
+
 > [!NOTE]  
 > Please help us and report your screen brand, model and eventually links and the issues you have to update the list with a Github PR or an issue.
 
