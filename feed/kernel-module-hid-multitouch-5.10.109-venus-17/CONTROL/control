@@ -1,0 +1,13 @@
+Package: kernel-module-hid-multitouch-5.10.109-venus-17
+Version: 5.10.109-venus-17-r0
+Description: hid multitouch kernel module
+ hid multitouch kernel module
+Section: kernel
+Priority: optional
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+License: GPL-2.0-only
+Architecture: einstein
+OE: linux-venus
+Homepage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-5.10.109-venus-17
+Depends: kernel-5.10.109-venus-17
+Provides: kernel-module-hid-multitouch

@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  BLANK_CONFIGURATION_FILE="/etc/venus/blank_display_device"
+  DEFAULT_CONF_VALUE=$(cat "$BLANK_CONFIGURATION_FILE")
+  
+  # Backup default configuration files
+  cp "$BLANK_CONFIGURATION_FILE" "$BLANK_CONFIGURATION_FILE.bak"
+  cp "$BLANK_CONFIGURATION_FILE.in" "$BLANK_CONFIGURATION_FILE.in.bak"
+  
+  # Create new configuration files
+  if [ -L "$BLANK_CONFIGURATION_FILE" ]; then
+    cp -f "$(readlink $BLANK_CONFIGURATION_FILE)" "$BLANK_CONFIGURATION_FILE"
+  fi
+  sed -i -e "s|$DEFAULT_CONF_VALUE|$BLANK_CONFIGURATION_FILE.value|g" "$BLANK_CONFIGURATION_FILE"
+  if [ -L "$BLANK_CONFIGURATION_FILE.in" ]; then
+    cp -f "$(readlink $BLANK_CONFIGURATION_FILE.in)" "$BLANK_CONFIGURATION_FILE.in"
+  fi
+  sed -i -e "s|$DEFAULT_CONF_VALUE|$BLANK_CONFIGURATION_FILE.value|g" "$BLANK_CONFIGURATION_FILE.in"
+  echo "0" > "$BLANK_CONFIGURATION_FILE.value"
+  
+  # Copy service files for svscan to detect it within seconds and avoid a reboot
+  cp -R /opt/victronenergy/service/blank-display-device/ /service/
+fi

@@ -1,0 +1,59 @@
+Package: blank-display-device
+Version: 1.0.0
+Section: utilities
+Architecture: all
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: fdd68ebde5829147cef1efc917695680
+Size: 1984
+Filename: blank-display-device_1.0.0_all.ipk
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/blank-display-device
+Description: Utility script enabling Venus OS Gui V2 sleep function on third party touchscreens
+OE: blank-display-device
+License: MIT
+Priority: optional
+
+Package: kernel-module-hid-multitouch-5.10.109-venus-17
+Version: 5.10.109-venus-17-r0
+Depends: kernel-5.10.109-venus-17
+Provides: kernel-module-hid-multitouch
+Section: kernel
+Architecture: einstein
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: 9d3fe1cdeb289277a38f92a339df38e7
+Size: 11900
+Filename: kernel-module-hid-multitouch-5.10.109-venus-17_5.10.109-venus-17-r0_einstein.ipk
+Description: hid multitouch kernel module
+OE: linux-venus
+HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-5.10.109-venus-17
+License: GPL-2.0-only
+Priority: optional
+
+Package: mod-persist
+Version: 1.0.0
+Depends: opkg
+Section: utilities
+Architecture: all
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: a5ce9f0c1d2521b86dd75aaa7b4861da
+Size: 4136
+Filename: mod-persist_1.0.0_all.ipk
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/mod-persist
+Description: User modification persistence utility package
+OE: mod-persist
+License: MIT
+Priority: optional
+
+Package: virtual-gps
+Version: 1.0.0
+Section: utilities
+Architecture: all
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: 21c88975329fe2788461ccdcccc22f64
+Size: 1470
+Filename: virtual-gps_1.0.0_all.ipk
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/virtual-gps
+Description: Venus OS virtual GPS using NMEA network stream
+OE: virtual-gps
+License: MIT
+Priority: optional
+

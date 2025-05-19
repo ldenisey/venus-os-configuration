@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "*** starting $(basename $(dirname $(realpath $0))) ***"
+. /data/etc/virtual-gps/virtual-gps.conf
+exec /usr/bin/socat -dd "udp4-recv:$VGPS_PORT" "pty,link=/dev/$VGPS_DEV,raw,nonblock,echo=0,b$VGPS_BAUD" 2>&1

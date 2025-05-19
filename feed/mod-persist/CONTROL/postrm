@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  echo "Removing mod-persist configuration. Persisted packages will not be removed automatically"
+  
+  # Clean rc.local
+  sed -i "s|^/data/opt/mod-persist/boot.sh$||g" /data/rc.local
+  
+  # Remove feed link
+  rm /etc/opkg/persisted_feeds.conf
+  
+  # Remove configuration files
+  rm -r /data/etc/mod-persist
+fi

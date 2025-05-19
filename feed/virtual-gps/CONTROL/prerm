@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  # Stop services to avoid a reboot
+  svc -d /service/virtual-gps-start
+  svc -d /service/virtual-gps-udp-redirect
+  sleep 1
+  rm -R /service/virtual-gps-start
+  rm -R /service/virtual-gps-udp-redirect
+
+  # Clear logs
+  rm -R /var/log/virtual-gps-start
+  rm -R /var/log/virtual-gps-udp-redirect
+fi

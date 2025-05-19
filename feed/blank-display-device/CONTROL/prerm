@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  BLANK_CONFIGURATION_FILE="/etc/venus/blank_display_device"
+  
+  # Stop service immediately to avoid a reboot
+  svc -d /service/blank-display-device
+  sleep 1
+  rm -r /service/blank-display-device
+  
+  # Delete configuration files
+  rm "$BLANK_CONFIGURATION_FILE"
+  rm "$BLANK_CONFIGURATION_FILE.in"
+  rm "$BLANK_CONFIGURATION_FILE.value"
+  
+  # Restore default configuration files
+  mv "$BLANK_CONFIGURATION_FILE.bak" "$BLANK_CONFIGURATION_FILE"
+  mv "$BLANK_CONFIGURATION_FILE.in.bak" "$BLANK_CONFIGURATION_FILE.in"
+
+  # Clear logs
+  rm -R /var/log/blank-display-device
+fi

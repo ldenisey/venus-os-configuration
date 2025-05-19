@@ -67,30 +67,27 @@ If your screen does not support backlight control and you are exclusively using 
 
 ## Gui V2 workaround
 
+### Why a workaround ?
 As of now, only a degraded solution is feasible, consisting of turning off HDMI. This has two drawbacks :
 - The screen turns black immediately but will keep its backlight on for a few seconds before shutting down
 - Every wake up requires several seconds for the Gui V2 to load
 
 That said, if your need is simply to turn the screen off for long period of time, during night or when you are getting out, it might be acceptable.
 
+### Installation
+
+To quickly test the fix :
 ``` bash
-  # Get and prepare sources
-  wget https://github.com/ldenisey/venus-os-configuration/archive/refs/heads/main.zip 
-  unzip main.zip
-  chmod +x ./venus-os-configuration-main/shell/data/opt/victronenergy/install-blank-display-device.sh
-
-  # Execute installation script
-  ./venus-os-configuration-main/shell/data/opt/victronenergy/install-blank-display-device.sh
-
-  # Clean up
-  rm -rf main.zip venus-os-configuration-main
+opkg install https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/main/feed/blank-display-device_1.0.0_all.ipk
+reboot
 ```
 
-How does it work ?
+If it works, make it persistent to firmware upgrades by [installing mod-persist](./VenusOS-Mod_persist.md.md#how-to-install-it) then :
+``` bash
+persist-opkg install blank-display-device
+```
 
-File [/data/opt/victronenergy/blank-display-device/blank-display-device.sh](../shell/data/opt/victronenergy/blank-display-device/blank-display-device.sh) contain the main script with the hdmi turn off/on logic.  
-Folder [/data/opt/victronenergy/service/blank-display-device/](../shell/data/opt/victronenergy/service/blank-display-device/) contains the service definition files that will be loaded by daemontools, the service manager of Venus OS.
+### How does it work ?
 
-Those files are installed in */data/* folder so that they will survive firmware updates.  
-For the service to be started at every boot, creation of symbolic link pointing to */service/* folder and service start command are set in [*/data/rc.local*](https://www.victronenergy.com/live/ccgx:root_access#hooks_to_install_run_own_code_at_boot) file, which is automatically executed by Venus OS.
-
+File [/opt/victronenergy/blank-display-device/blank-display-device.sh](../feed/blank-display-device/opt/victronenergy/blank-display-device/blank-display-device.sh) contains the main script with the hdmi turn off/on logic.  
+Folder [/opt/victronenergy/service/blank-display-device/](../feed/blank-display-device/opt/victronenergy/service/blank-display-device/) contains the service definition files that will be loaded by daemontools, the service manager of Venus OS.
