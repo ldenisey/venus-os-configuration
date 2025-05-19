@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  echo "Removing opkg-persist configuration. Persisted packages will not be removed automatically"
+  
+  # Clean rc.local
+  sed -i "s|^/data/etc/opkg-persist/boot.sh$||g" /data/rc.local
+  
+  # Remove links
+  rm /etc/opkg/persisted_feeds.conf
+  rm -r /etc/opkg-persist
+fi

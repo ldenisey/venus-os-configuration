@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  # Add init script to rc.local for persistence
+  if [ ! -f /data/rc.local ]; then
+    echo -e "#!/bin/bash\n" > /data/rc.local
+  fi
+  if ! grep -q "/data/etc/opkg-persist/boot.sh" /data/rc.local; then
+    echo -e "\n/data/etc/opkg-persist/boot.sh" >> /data/rc.local
+  fi
+  
+  # Create links
+  mkdir -p /etc/opkg-persist
+  ln -sf /data/etc/opkg-persist/persisted_pkgs.conf /etc/opkg-persist/persisted_pkgs.conf
+  ln -sf /data/etc/opkg-persist/persisted_feeds.conf /etc/opkg/persisted_feeds.conf
+fi

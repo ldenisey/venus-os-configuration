@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  depmod -a 5.10.109-venus-17
+fi

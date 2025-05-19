@@ -1,0 +1,12 @@
+Package: opkg-persist
+Version: 1.0.0
+Description: Opkg persist utility package
+ Opkg persist utility package
+Section: utilities
+Priority: optional
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+License: MIT
+Architecture: all
+OE: opkg-persist
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/opkg-persist
+Depends: opkg
