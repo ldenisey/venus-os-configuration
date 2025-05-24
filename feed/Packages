@@ -1,3 +1,17 @@
+Package: blank-display-device
+Version: 1.0.0
+Section: utilities
+Architecture: all
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: b3d2370da9f47fb31e577de7498b4efd
+Size: 1932
+Filename: blank-display-device_1.0.0_all.ipk
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/blank-display-device
+Description: Utility script enabling Venus OS Gui V2 sleep function on third party touchscreens
+OE: blank-display-device
+License: MIT
+Priority: optional
+
 Package: kernel-module-hid-multitouch-5.10.109-venus-17
 Version: 5.10.109-venus-17-r0
 Depends: kernel-5.10.109-venus-17
@@ -5,7 +19,7 @@ Provides: kernel-module-hid-multitouch
 Section: kernel
 Architecture: einstein
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: fe18d4b4fdb63a0db850388c4bdf64e7
+MD5Sum: 0aef0ef6e45ccea484d8645d7adb8462
 Size: 11900
 Filename: kernel-module-hid-multitouch-5.10.109-venus-17_5.10.109-venus-17-r0_einstein.ipk
 Description: hid multitouch kernel module
@@ -20,8 +34,8 @@ Depends: opkg
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 1e9e322d7bc88a746fd71ed5d13126e2
-Size: 3088
+MD5Sum: c4cd98dd41e70c71dd62e7ec6a623f9f
+Size: 3100
 Filename: opkg-persist_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/opkg-persist
 Description: Opkg persist utility package

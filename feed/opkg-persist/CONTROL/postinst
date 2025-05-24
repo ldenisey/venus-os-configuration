@@ -4,6 +4,7 @@ if [ -z "$D" ]; then
   # Add init script to rc.local for persistence
   if [ ! -f /data/rc.local ]; then
     echo -e "#!/bin/bash\n" > /data/rc.local
+    chmod 755 /data/rc.local
   fi
   if ! grep -q "/data/etc/opkg-persist/boot.sh" /data/rc.local; then
     echo -e "\n/data/etc/opkg-persist/boot.sh" >> /data/rc.local

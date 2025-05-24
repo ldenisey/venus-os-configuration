@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+if [ -z "$D" ]; then
+  # Stop service immediately to avoid a reboot
+  svc -d /service/blank-display-device
+  rm -r /service/blank-display-device
+
+  # Delete configuration files
+  rm "$BLANK_CONFIGURATION_FILE"
+  rm "$BLANK_CONFIGURATION_FILE.in"
+  rm "$BLANK_CONFIGURATION_FILE.value"
+
+  # Restore default configuration files
+  mv "$BLANK_CONFIGURATION_FILE.bak" "$BLANK_CONFIGURATION_FILE"
+  mv "$BLANK_CONFIGURATION_FILE.in.bak" "$BLANK_CONFIGURATION_FILE.in"
+fi

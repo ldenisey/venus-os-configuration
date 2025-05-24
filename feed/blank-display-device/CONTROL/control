@@ -1,0 +1,11 @@
+Package: blank-display-device
+Version: 1.0.0
+Description: Utility script enabling Venus OS Gui V2 sleep function on third party touchscreens
+ Utility script enabling Venus OS Gui V2 sleep function on third party touchscreens
+Section: utilities
+Priority: optional
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+License: MIT
+Architecture: all
+OE: blank-display-device
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/blank-display-device
