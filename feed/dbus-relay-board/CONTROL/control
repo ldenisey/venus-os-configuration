@@ -1,0 +1,11 @@
+Package: dbus-relay-board
+Version: 1.0.0
+Description: Add support to RS485, RS232 and TTL232 relay boards
+ Add support to RS485, RS232 and TTL232 relay boards
+Section: utilities
+Priority: optional
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+License: MIT
+Architecture: all
+OE: dbus-relay-board
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-relay-board

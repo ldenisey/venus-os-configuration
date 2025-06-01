@@ -26,17 +26,31 @@ For other commands and more explanation : `persist-opkg help`
 
 ### persist-file script
 
-To install files, folders or patches : `persist-file install <files|folders|patches>`  
-To remove files, folders or patches : `persist-file remove <files|folders|patches>`
+To list persisted files : `persist-file list`
 
-*<files|folders>* are destination paths, the sources must be placed in */data* folder, in their target path. 
-For example: to replace file */etc/file*, put your new file in */data/etc/file* and execute `persist-file install /etc/file`.
+To install files or folders : `persist-file install <files|folders>`  
+To remove files or folders : `persist-file remove <files|folders>`
 
-*<patches>* are patches target files paths, the patch files must be placed in */data* folder, in their target path and appened with *.patch*.  
-For example: to patch file */etc/file*, put your patch file in */data/etc/file.patch* and execute `persist-file install /etc/file.patch`.
+*<files|folders>* are file paths located in */data* folder. They will be installed following their path, without the */data* :  
+to install */etc/file*, put your new file in */data/etc/file* and execute `persist-file install /data/etc/file`.
 
 > [!NOTE]  
 > During installation, original files and folders are copied with a *.bak* extension. Those are necessary, they are used to detect if a file has been installed already and are restored by remove commands.
+
+### persist-patch script
+
+To list persisted patches : `persist-patch list`
+
+To install patches : `persist-patch install <patches>`  
+To remove patches : `persist-patch remove <patches>`
+
+*<patches>* are patch file paths located in */data* folder, with a '.patch" extension. They will be executed against the file following their path, without the */data* and their extension :  
+to patch file */etc/file*, put your patch file in */data/etc/file.patch* and execute `persist-patch install /data/etc/file.patch`.
+
+> [!NOTE]  
+> During installation, original files and folders are copied with a *.bak* extension. Those are necessary, they are used to detect if a file has been installed already and are restored by remove commands.
+
+
 
 ## How does it work
 

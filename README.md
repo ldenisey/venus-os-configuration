@@ -34,6 +34,10 @@ Various guides for Venus OS based devices, by the menu :
   * [Debugging grid meter rs485 connection](docs/GridMeter-Configuration_debug.md)
 
 
+* Relay board
+  * [Installing relay board service](docs/RelayBoard-Service_installation.md)
+
+
 * Truma gaz regulators
   * [Connect DuoC tank level sensor](docs/Truma-DuoC_tank_level_sensor_connection.md)
   * [Connect EisEx heater](docs/Truma-EisEx_connection.md)

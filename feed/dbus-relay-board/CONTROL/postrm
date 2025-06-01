@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Remove service from serial starter conf file
+SERIAL_STARTER_CONFIG='/etc/venus/serial-starter.conf'
+CONFIG='service relay       dbus-relay-board'
+if grep -q "^$CONFIG$" "$SERIAL_STARTER_CONFIG"; then
+  sed -i "/^$CONFIG$/d" "$SERIAL_STARTER_CONFIG"
+fi

@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "*** starting $(basename $(dirname $(realpath $0))) ***"
+exec 2>&1
+exec /opt/victronenergy/dbus-relay-board/start-relay.sh TTY
