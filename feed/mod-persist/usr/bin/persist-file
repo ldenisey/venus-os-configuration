@@ -1,19 +1,18 @@
 #!/bin/bash
 # Mod persist opkg util script.
-# Allow users to persists files and patches across reboots, unexpected removals, resets, destructive firmware updates, ...
+# Allow users to persists files and folders across reboots, unexpected removals, resets, destructive firmware updates, ...
 
 help() {
-  echo "Usage: persist-target_file command [arguments...]"
+  echo "Usage: persist-file command [arguments...]"
   echo ""
   echo "Where command is one of:"
   echo "  list : list persisted files and patches"
-  echo "  install <files|patches> : add <files|patches> to the persisted list and apply them"
-  echo "  remove <files|patches> : remove <files|patches> from the persisted list and revert them"
-  echo "  apply : check and reinstall persisted packages if needed"
+  echo "  install <files|folders> : add <files|folders> to the persisted list and apply them"
+  echo "  remove <files|folders> : remove <files|folders> from the persisted list and revert them"
+  echo "  apply : check and reinstall persisted files and folders if needed"
   echo "  help : show this help"
   echo ""
-  echo "<files> : File or folder target absolute paths. Source files are to be set in /data/[target_path]."
-  echo "<patches> : Patch file file target absolute path, appended with '.patch' extension. Patch files are to be set in /data/[target_file_path].patch."
+  echo "<files|folders> : File or folder source absolute paths in /data, with target file path. I.e. pathes following : /data/[target path]."
 }
 
 error() {
@@ -31,7 +30,7 @@ error() {
       exit 2
     ;;
     3)
-      echo "Missing <files|patches> argument." >&2
+      echo "Missing <files|folders> argument." >&2
       help
       exit 3
     ;;
@@ -40,20 +39,8 @@ error() {
       exit 4
     ;;
     5)
-      echo "File not found in persisted list: $2" >&2
+      echo "Source file must be in /data folder: $2" >&2
       exit 5
-    ;;
-    6)
-      echo "Patch target file not found: $2" >&2
-      exit 6
-    ;;
-    7)
-      echo "Patch target must be a file: $2" >&2
-      exit 7
-    ;;
-    8)
-      echo "Patch execution failed for file: $2" >&2
-      exit 8
     ;;
     *)
       echo "Error: Unknown error code $1" >&2
@@ -65,110 +52,67 @@ error() {
 PERSISTED_FILES_LIST_PATH="/data/etc/mod-persist/persisted_files.conf"
 VOID_FILE_CONTENT="Void"
 
-check_target_file() {
-  local target_file="$1"
-  local source_file="/data$target_file"
-  
-  if [[ ! -f "$source_file" ]]; then
-    error 4 "$source_file"
+check_file_arg() {
+  local source_file="$1"
+  if [[ "$source_file" != /data/* ]]; then
+    error 5 "$source_file"
   fi
+  local target_file="${source_file:5}"
   
-  if [[ "$target_file" == *.patch ]]; then
-    local target_file_target="${target_file%.patch}"
-    if [[ ! -e "$target_file_target" ]]; then
-      error 6 "$target_file_target"
-    fi
-    if [[ -d "$target_file_target" ]]; then
-      error 7 "$target_file_target"
-    fi
+  if [[ ! -e "$source_file" ]]; then
+    error 4 "$source_file"
   fi
 }
 
 install() {
-  local target_file="$1"
-  
-  if [[ "$target_file" == *.patch ]]; then
-    install_patch "$target_file"
-  else
-    install_file "$target_file"
-  fi
-  
-  if ! grep -q "^$target_file$" "$PERSISTED_FILES_LIST_PATH"; then
-    echo "$target_file" >> "$PERSISTED_FILES_LIST_PATH"
-    echo "File added in persisted list: $target_file"
-  else
-    echo "File already in persisted list: $target_file"
-  fi
-}
-
-install_file() {
-  local target_file="$1"
-  local source_file="/data$target_file"
+  local source_file="$1"
+  local target_file="${source_file:5}"
   local bak_file="${target_file}.bak"
   
   if [[ -e "$bak_file" ]]; then
-    echo "File already installed: $target_file"
+    echo "File already installed: $source_file"
   else
     if [[ -e "$target_file" ]]; then
       mv "$target_file" "$bak_file"
     else
       echo -n "$VOID_FILE_CONTENT" > "$bak_file"
     fi
-    cp "$source_file" "$target_file"
-    echo "File installed: $target_file"
+    cp -r "$source_file" "$target_file"
+    echo "File installed: $source_file"
   fi
-}
-
-install_patch() {
-  local patch_file="/data$1"
-  local target_file="${1%.patch}"
-  local bak_file="${target_file}.bak"
   
-  if [[ -e "$bak_file" ]]; then
-    echo "Patch already installed: $target_file"
+  if ! grep -q "^$source_file$" "$PERSISTED_FILES_LIST_PATH"; then
+    echo "$source_file" >> "$PERSISTED_FILES_LIST_PATH"
+    echo "File added in persisted list: $source_file"
   else
-    cp "$target_file" "$bak_file"
-    patch "$target_file" "$patch_file"
-    if [[ $? -ne 0 ]]; then
-      rm "$bak_file"
-      error 8 "$target_file"
-    fi
-    echo "Patch installed: $target_file"
+    echo "File already in persisted list: $source_file"
   fi
 }
 
 remove() {
-  local target_file="$1"
-  
-  if grep -q "^$target_file$" "$PERSISTED_FILES_LIST_PATH"; then
-    if [[ "$target_file" == *.patch ]]; then
-      remove_file "${target_file%.patch}"
-    else
-      remove_file "$target_file"
-    fi
-    # Ugly workaround because of busybox sed limitations
-    grep -vxF -- "$target_file" "$PERSISTED_FILES_LIST_PATH" > "${PERSISTED_FILES_LIST_PATH}.tmp"
-    mv -f "${PERSISTED_FILES_LIST_PATH}.tmp" "$PERSISTED_FILES_LIST_PATH"
-    echo "File removed from persisted list: $target_file"
-  else
-    echo "File not found in persisted list: $target_file"
-  fi
-}
-
-remove_file() {
-  local target_file="$1"
+  local source_file="$1"
+  local target_file="${source_file:5}"
   local bak_file="${target_file}.bak"
   
-  if [[ -e "$bak_file" ]]; then
-    rm -R "$target_file"
-    if [[ ! -d "$bak_file" ]] && [[ "$(cat $bak_file)" == "$VOID_FILE_CONTENT" ]]; then
-      rm -R "$bak_file"
+  if grep -q "^$source_file$" "$PERSISTED_FILES_LIST_PATH"; then
+    if [[ -e "$bak_file" ]]; then
+      rm -r "$target_file"
+      if [[ ! -d "$bak_file" ]] && [[ "$(cat $bak_file)" == "$VOID_FILE_CONTENT" ]]; then
+        rm -r "$bak_file"
+      else
+        mv "$bak_file" "$target_file"
+      fi
+      echo "File removed: $source_file"
     else
-      mv "$bak_file" "$target_file"
+      echo "File already removed: $source_file"
     fi
-    echo "File removed: $target_file"
+
+    # Ugly workaround because of busybox sed limitations
+    grep -vxF -- "$source_file" "$PERSISTED_FILES_LIST_PATH" > "${PERSISTED_FILES_LIST_PATH}.tmp"
+    mv -f "${PERSISTED_FILES_LIST_PATH}.tmp" "$PERSISTED_FILES_LIST_PATH"
+    echo "File removed from persisted list: $source_file"
   else
-    echo "File already removed: $target_file"
+    echo "File not found in persisted list: $source_file"
   fi
 }
 
@@ -184,7 +128,7 @@ case "$1" in
     fi
     
     for arg in "${@:2}"; do
-      check_target_file "$arg"
+      check_file_arg "$arg"
       install "$arg"
     done
   ;;
@@ -205,14 +149,14 @@ case "$1" in
     fi
     
     ret_code=0
-    while IFS= read -r target_file; do
-      validity=$(check_target_file "$target_file")
+    while IFS= read -r source_file; do
+      validity=$(check_file_arg "$source_file")
       if [[ ! "$validity" -eq "0" ]]; then
         ret_code="$validity"
         continue
       fi
       
-      install "$target_file"
+      install "$source_file"
     done < "$PERSISTED_FILES_LIST_PATH"
     
     echo "Applied persisted files."

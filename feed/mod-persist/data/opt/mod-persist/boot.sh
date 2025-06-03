@@ -16,3 +16,6 @@ persist-opkg apply
 
 # Check persisted files installation
 persist-file apply
+
+# Check persisted files installation
+persist-patch apply

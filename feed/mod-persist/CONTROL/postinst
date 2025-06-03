@@ -17,6 +17,10 @@ if [ -z "$D" ]; then
   PERSISTED_FILES_LIST_PATH="/data/etc/mod-persist/persisted_files.conf"
   touch "$PERSISTED_FILES_LIST_PATH"
   
+  # Init patches list file
+  PERSISTED_PATCHES_LIST_PATH="/data/etc/mod-persist/persisted_patches.conf"
+  touch "$PERSISTED_PATCHES_LIST_PATH"
+  
   # Init package list file
   PERSISTED_PKGS_LIST_PATH="/data/etc/mod-persist/persisted_opkg_pkgs.conf"
   touch "$PERSISTED_PKGS_LIST_PATH"

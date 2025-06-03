@@ -48,8 +48,8 @@ Depends: opkg
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: a5ce9f0c1d2521b86dd75aaa7b4861da
-Size: 4136
+MD5Sum: 77ca756164bc79ae069d67d8fc2797a0
+Size: 4464
 Filename: mod-persist_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/mod-persist
 Description: User modification persistence utility package
