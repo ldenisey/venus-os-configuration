@@ -38,7 +38,33 @@ Connected to your device with ssh, as root :
     opkg update
     
     # Install required packages
-    opkg install flex bison gcc-plugins libmpc-dev bc
+    opkg install flex bison gcc-plugins libmpc-dev bc perl perl-modules
+
+    # Try and install bison (https://www.gnu.org/software/bison/)
+    opkg install bison
+
+    # If it fails because it is not found in victron opkg feeds, build it manually
+    wget https://ftp.gnu.org/gnu/bison/bison-3.8.tar.gz
+    tar -xf bison-3.8.tar.gz
+    cd bison-3.8
+    ./configure
+    make
+    make install
+    bison -h # Should show help menu
+    rm -r bison-3.8 bison-3.8.tar.gz
+
+    # Try and install flex (https://github.com/westes/flex)
+    opkg install flex
+
+    # If it fails because it is not found in victron opkg feeds, build it manually
+    wget https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz
+    tar -xf flex-2.6.4.tar.gz
+    cd flex-2.6.4
+    ./configure --prefix=/usr
+    make
+    make install
+    flex -h # Should show help menu
+    rm -r flex-2.6.4 flex-2.6.4.tar.gz
     
     # Get your current kernel version (i.e. 5.10.109-venus-17). Note it, you will need it to check for futur Venus OS versions compatibity
     uname -r

@@ -26,7 +26,7 @@ persist-opkg install "kernel-module-hid-multitouch-$(uname -r)"
 
 If you want or need to compile your own driver, follow the [Kernel local compilation](./VenusOS-Kernel_local_compilation.md) guide and :
 
-- at the kernel configuration step, add the line `select HID_MULTITOUCH` in the input section (below line `select HID` ~195)
+- at the kernel configuration step, add the line `select HID_MULTITOUCH` in the input section (below line `select HID`)
 of the file `/data/home/root/linux-$(uname -r)/Kconfig.venus`.
 - once the compilation is over, the driver module file is available at `/data/home/root/linux-$(uname -r)/drivers/hid/hid-multitouch.ko`
 

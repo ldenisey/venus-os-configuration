@@ -1,4 +1,6 @@
 #!/bin/sh
+exec > >(multilog t s25000 n4 "/var/log/$(basename $(dirname $(realpath $0)))") 2>&1
+echo "*** Starting mod-persist boot script ***"
 
 # Expend rootfs and make it writable
 /opt/victronenergy/swupdate-scripts/resize2fs.sh
@@ -19,3 +21,5 @@ persist-file apply
 
 # Check persisted files installation
 persist-patch apply
+
+echo "*** End of mod-persist boot script ***"
