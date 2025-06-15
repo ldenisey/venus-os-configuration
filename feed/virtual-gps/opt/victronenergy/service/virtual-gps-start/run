@@ -2,4 +2,4 @@
 echo "*** starting $(basename $(dirname $(realpath $0))) ***"
 exec 2>&1
 . /data/etc/virtual-gps/virtual-gps.conf
-exec /opt/victronenergy/gps-dbus/gps_dbus -v -s "/dev/$VGPS_DEV"
+exec /opt/victronenergy/gps-dbus/gps_dbus -v -s "/dev/$VIRTUAL_GPS_DEV"

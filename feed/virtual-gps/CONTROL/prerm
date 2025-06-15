@@ -8,6 +8,9 @@ if [ -z "$D" ]; then
   rm -R /service/virtual-gps-start
   rm -R /service/virtual-gps-udp-redirect
 
+  # Remove conf file
+  rm -r /data/etc/virtual-gps
+
   # Clear logs
   rm -R /var/log/virtual-gps-start
   rm -R /var/log/virtual-gps-udp-redirect

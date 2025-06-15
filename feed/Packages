@@ -17,8 +17,8 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: e32e9a1fda0e34b97d88838b501445aa
-Size: 16060
+MD5Sum: 33596ebe15d27b790a46a3eb49e17b4a
+Size: 16104
 Filename: dbus-relay-board_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-relay-board
 Description: Add support to RS485, RS232 and TTL232 relay boards
@@ -78,8 +78,8 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 21c88975329fe2788461ccdcccc22f64
-Size: 1470
+MD5Sum: 8dc63b447bb7af57488163e511da9338
+Size: 1516
 Filename: virtual-gps_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/virtual-gps
 Description: Venus OS virtual GPS using NMEA network stream

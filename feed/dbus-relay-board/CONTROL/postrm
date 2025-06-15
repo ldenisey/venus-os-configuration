@@ -6,3 +6,6 @@ CONFIG='service relay       dbus-relay-board'
 if grep -q "^$CONFIG$" "$SERIAL_STARTER_CONFIG"; then
   sed -i "/^$CONFIG$/d" "$SERIAL_STARTER_CONFIG"
 fi
+
+# Remove configuration files
+rm -r /etc/dbus-relay-board
