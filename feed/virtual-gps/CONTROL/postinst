@@ -5,9 +5,10 @@ if [ -z "$D" ]; then
   CONF_FILE="/data/etc/virtual-gps/virtual-gps.conf"
   if [ ! -f "$CONF_FILE" ]; then
     cat << EOF > "$CONF_FILE"
-VIRTUAL_GPS_DEV=ttyGPS
-VIRTUAL_GPS_PORT=8500 # Any valid port number
-VIRTUAL_GPS_BAUD=4800 # 4800/9600/38400/115200
+VIRTUAL_GPS_DEV=ttyGPS   # Any tty* name, must be unique
+VIRTUAL_GPS_PORT=8500    # Any valid port number
+VIRTUAL_GPS_BAUD=4800    # 4800/9600/38400/115200
+VIRTUAL_GPS_NAME=""      # Optional name, default is defined by Victron GPS service
 EOF
   fi
 

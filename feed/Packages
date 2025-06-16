@@ -78,8 +78,8 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 8dc63b447bb7af57488163e511da9338
-Size: 1516
+MD5Sum: 104eb77947cd29f21bf90d588adc7891
+Size: 1662
 Filename: virtual-gps_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/virtual-gps
 Description: Venus OS virtual GPS using NMEA network stream
