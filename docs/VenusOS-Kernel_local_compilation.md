@@ -38,7 +38,7 @@ Connected to your device with ssh, as root :
     opkg update
     
     # Install required packages
-    opkg install flex bison gcc-plugins libmpc-dev bc perl perl-modules
+    opkg install gcc-plugins libmpc-dev bc perl perl-module-integer
 
     # Try and install bison (https://www.gnu.org/software/bison/)
     opkg install bison
@@ -52,6 +52,7 @@ Connected to your device with ssh, as root :
     make install
     bison -h # Should show help menu
     rm -r bison-3.8 bison-3.8.tar.gz
+    cd ..
 
     # Try and install flex (https://github.com/westes/flex)
     opkg install flex
@@ -65,6 +66,7 @@ Connected to your device with ssh, as root :
     make install
     flex -h # Should show help menu
     rm -r flex-2.6.4 flex-2.6.4.tar.gz
+    cd ..
     
     # Get your current kernel version (i.e. 5.10.109-venus-17). Note it, you will need it to check for futur Venus OS versions compatibity
     uname -r
@@ -116,7 +118,7 @@ Once your kernel customization is done, validate with :
     make oldconfig && make prepare
 ```
 
-## Compile the kernel
+## Compile your modifications
 
 Restart the compilation process with `make` command.
 

@@ -1,8 +1,27 @@
 #!/bin/sh
 echo "*** starting $(basename $(dirname $(realpath $0))) ***"
 exec 2>&1
-. /data/etc/virtual-gps/virtual-gps.conf
-if [ -n "$VIRTUAL_GPS_NAME" ]; then
-  (sleep 15; dbus -y "com.victronenergy.gps.ve_$VIRTUAL_GPS_DEV" /ProductName SetValue "$VIRTUAL_GPS_NAME") &
+
+CONF_FILE="/data/etc/virtual-gps/virtual-gps.conf"
+if [ ! -f "$CONF_FILE" ]; then
+  echo "Can not find $CONF_FILE, please create it with the required configuration." >&2
+  exit 1
 fi
+
+. "$CONF_FILE"
+if [ -n "$VIRTUAL_GPS_NAME" ]; then
+  (
+    while true; do
+      sleep 5
+      dbus -y "com.victronenergy.gps.ve_$VIRTUAL_GPS_DEV" / GetValue &>/dev/null
+      if [ "$?" -eq 0 ]; then
+        echo "Renaming virtual GPS device $VIRTUAL_GPS_DEV to $VIRTUAL_GPS_NAME"
+        dbus -y "com.victronenergy.gps.ve_$VIRTUAL_GPS_DEV" /ProductName SetValue "$VIRTUAL_GPS_NAME"
+        break
+      fi
+    done
+  ) &
+fi
+
+echo "Starting GPS service with device /dev/$VIRTUAL_GPS_DEV"
 exec /opt/victronenergy/gps-dbus/gps_dbus -v -s "/dev/$VIRTUAL_GPS_DEV"

@@ -3,8 +3,8 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: fdd68ebde5829147cef1efc917695680
-Size: 1984
+MD5Sum: 0ab907fc39d3ecd9a105a7c552ebfeb9
+Size: 1998
 Filename: blank-display-device_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/blank-display-device
 Description: Utility script enabling Venus OS Gui V2 sleep function on third party touchscreens
@@ -17,12 +17,26 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 33596ebe15d27b790a46a3eb49e17b4a
-Size: 16104
+MD5Sum: 01aebc81b51bd2f2d3cefd7ca7c2368a
+Size: 16100
 Filename: dbus-relay-board_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-relay-board
 Description: Add support to RS485, RS232 and TTL232 relay boards
 OE: dbus-relay-board
+License: MIT
+Priority: optional
+
+Package: dbus-teltonika-eye-sensor
+Version: 1.0.0
+Section: base
+Architecture: all
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: ddaa96fc10d2df362b0b88da2e2cbe93
+Size: 159666
+Filename: dbus-teltonika-eye-sensor_1.0.0_all.ipk
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-teltonika-eye-sensor
+Description: Add support to Teltonika Eye Sensor bluetooth device
+OE: dbus-teltonika-eye-sensor
 License: MIT
 Priority: optional
 
@@ -33,8 +47,8 @@ Provides: kernel-module-hid-multitouch
 Section: kernel
 Architecture: einstein
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 9d3fe1cdeb289277a38f92a339df38e7
-Size: 11900
+MD5Sum: 1a3c0e14f6cf10aaf35e9e2345339b0d
+Size: 11942
 Filename: kernel-module-hid-multitouch-5.10.109-venus-17_5.10.109-venus-17-r0_einstein.ipk
 Description: hid multitouch kernel module
 OE: linux-venus
@@ -49,12 +63,28 @@ Provides: kernel-module-hid-multitouch
 Section: kernel
 Architecture: einstein
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: c260b86d9e8e1af03f389767efad32ff
-Size: 13282
+MD5Sum: a025684d7ea0b15bebfe085c9173b7eb
+Size: 13280
 Filename: kernel-module-hid-multitouch-6.12.23-venus-4_6.12.23-venus-4-r0_einstein.ipk
 Description: hid multitouch kernel module
 OE: linux-venus
 HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-4
+License: GPL-2.0-only
+Priority: optional
+
+Package: kernel-module-hid-multitouch-6.12.23-venus-5
+Version: 6.12.23-venus-5-r0
+Depends: kernel-6.12.23-venus-5
+Provides: kernel-module-hid-multitouch
+Section: kernel
+Architecture: einstein
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: ab6a1fdfbc36037baf06ca07e4506c35
+Size: 13278
+Filename: kernel-module-hid-multitouch-6.12.23-venus-5_6.12.23-venus-5-r0_einstein.ipk
+Description: hid multitouch kernel module
+OE: linux-venus
+HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-5
 License: GPL-2.0-only
 Priority: optional
 
@@ -64,8 +94,8 @@ Depends: opkg
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: b62ebaca2a0fef028667adfb6c147ecf
-Size: 4564
+MD5Sum: d03f8eec52596defbb854f93d9e3e18a
+Size: 4568
 Filename: mod-persist_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/mod-persist
 Description: User modification persistence utility package
@@ -78,8 +108,8 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 104eb77947cd29f21bf90d588adc7891
-Size: 1662
+MD5Sum: 1713b347b301d387a1989a0f3818d0bd
+Size: 1850
 Filename: virtual-gps_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/virtual-gps
 Description: Venus OS virtual GPS using NMEA network stream

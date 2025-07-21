@@ -26,9 +26,9 @@ To quickly test the virtual GPS :
 opkg install https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/main/feed/virtual-gps_1.0.0_all.ipk
 ```
 
-If you have set a port different than 8500 or want to customize the configuration, update the file */data/etc/virtual-gps/virtual-gps.conf* and restart the device.
+Check port, baud rate and name the device if you want in configuration file */data/etc/virtual-gps/virtual-gps.conf* and reboot your GX device.
 
-You should see a new device in the menu with GPS information in *Settings* -> *GPS*.  
+From the Gui *Settings* menu, you should see a new GPS device.  
 To make the package persistent to firmware upgrades, [install mod-persist](./VenusOS-Mod_persist.md.md#how-to-install-it) then :
 ``` bash
 persist-opkg install virtual-gps

@@ -5,3 +5,5 @@ misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
 /*.code-workspace
+/feed/*.hash
+/feed/build-feed.sh
