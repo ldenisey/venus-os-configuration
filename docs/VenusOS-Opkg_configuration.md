@@ -43,3 +43,67 @@ Updated source 'cortexa7hf-neon-vfpv4'.
 Downloading https://updates.victronenergy.com/feeds/venus/release/packages/dunfell/einstein/Packages.gz.
 Updated source 'einstein'.
 ```
+
+## Creating packages
+
+### Prerequisistes
+
+``` bash
+opkg update
+opkg install opkg-utils
+cd
+mkdir -p feed
+```
+
+### Package content
+
+Create base folder :
+``` bash
+cd feed
+mkdir -p package/CONTROL
+cd package
+```
+
+Add target files with their full destination path in package/ folder and grant them appropriated rights.
+
+Create *package/CONTROL/control* file :
+``` bash
+cat << EOF
+Package: package
+Version: 1.0.0
+Maintainer: John Doe <jdoe@gmail.com>
+Architecture: einstein
+EOF > ./CONTROL/control
+chmod 644 ./CONTROL/control
+```
+
+If needed, add preinst, postinst, prerm and/or postrm files in package/CONTROL/.
+
+### Create package
+
+### Automated command
+
+``` bash
+cd .. # in ./feed
+opkg-build package
+```
+
+### Manual commands
+
+To manually create the package:
+``` bash
+cd package
+echo "2.0" > debian-binary
+tar -czf control.tar.xz -C control .
+tar -czf data.tar.xz -C data .
+ar rv package_1.0.0_einstein.ipk control.tar.gz data.tar.gz debian-binary
+```
+
+To decompress a package : `ar x package.ipk` or `tar -xf package.ipk`
+
+### Update package feed index
+
+``` bash
+cd .. # in ./feed
+opkg-make-index -p Packages .
+```

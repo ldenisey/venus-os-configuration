@@ -12,12 +12,12 @@ Else test your screen with the [calibration procedure](./Touchscreen-Configurati
 
 For a quick test :
 ``` bash
-opkg install "https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/main/feed/kernel-module-hid-multitouch-$(uname -r)_$(uname -r)-r0_$(cat /etc/venus/machine).ipk"
+opkg install "https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/main/feed/kernel-module-hid-multitouch_$(uname -r)-r0_$(cat /etc/venus/machine).ipk"
 ```
 
 Unplug/replug the screen or restart your device and test your screen. If it works, make the driver persistent to firmware upgrades by [installing mod-persist](./VenusOS-Mod_persist.md.md#how-to-install-it) then :
 ``` bash
-persist-opkg install "kernel-module-hid-multitouch-$(uname -r)"
+persist-opkg install "kernel-module-hid-multitouch"
 ```
 
 ## I want to build it myself !
