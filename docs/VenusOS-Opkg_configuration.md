@@ -99,7 +99,7 @@ tar -czf data.tar.xz -C data .
 ar rv package_1.0.0_einstein.ipk control.tar.gz data.tar.gz debian-binary
 ```
 
-To decompress a package : `ar x package.ipk` or `tar -xf package.ipk`
+To decompress a package : `ar x package.ipk`
 
 ### Update package feed index
 
