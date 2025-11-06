@@ -1,0 +1,40 @@
+{
+    "temperature": {
+        "settings": {
+            "TemperatureType": {
+                "type":"VE_SN32",
+                "def":"2",
+                "min":"0",
+                "max":"6"
+            },
+            "Temperature": {
+                "type":"VE_SN16",
+                "offset": 1,
+                "scale": 200,
+                "inval": "0x8000",
+                "flags": ["REG_FLAG_BIG_ENDIAN", "REG_FLAG_INVALID"],
+                "format": [1, "C"]
+            }
+        },
+        "alarms": {
+            "LowBattery": {
+                "item": "BatteryVoltage",
+                "hyst": 0.4,
+                "get_level": "ruuvi_lowbat",
+                "flags": ["ALARM_FLAG_HIGH", "ALARM_FLAG_CONFIG"],
+                "active": {
+                    "type":"VE_SN32",
+                    "def":"0",
+                    "min":"0",
+                    "max":"100"
+                },
+                "restore ":  {
+                    "type":"VE_SN32",
+                    "def":"80",
+                    "min":"0",
+                    "max":"100"
+                }
+            }
+        }
+    }
+}

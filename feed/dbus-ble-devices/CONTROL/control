@@ -1,0 +1,11 @@
+Package: dbus-ble-devices
+Version: 1.0.0
+Description: Add support to unofficially supported bluetooth devices
+ Add support to unofficially supported bluetooth devices
+Section: base
+Priority: optional
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+License: MIT
+Architecture: all
+OE: dbus-ble-devices
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-ble-devices
