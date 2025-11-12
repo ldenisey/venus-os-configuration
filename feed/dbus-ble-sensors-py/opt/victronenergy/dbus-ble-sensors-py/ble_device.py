@@ -1,6 +1,5 @@
 from __future__ import annotations
 import os
-import sys
 import inspect
 import logging
 import importlib.util
@@ -22,7 +21,7 @@ class BleDevice(object):
     # Dict of already initialized instances, key is mac address
     DEVICE_INSTANCES = {}
 
-    def __init__(self, dev_mac: str):
+    def __init__(self, dev_mac: str, dev_name: str):
         self._dbus_services: dict = {}
 
         # Mandatory fields must be overloaded by subclasses, optional ones can be left as is.
@@ -30,54 +29,52 @@ class BleDevice(object):
             'dev_mac': dev_mac,         # Internal
             'product_id': 0x0000,       # Mandatory, int, ble product id
             'product_name': None,       # Mandatory, str, product name without spaces or special chars
+            'DeviceName': dev_name,     # Optional, str, human friendly device name, i.e. Ruuvi AABB
             'hardware_version': "1.0.0",  # Optional,  str, Device harware version
             'firmware_version': "1.0.0",  # Optional,  str, Device firmware version
-            'DeviceName': None,         # Mandatory, str, human friendly device name, i.e. Ruuvi AABB
             'dev_prefix': None,         # Mandatory, str, device prefix, used in dbus path, must be short, without spaces
-            'roles': [],                # Mandatory, list of str, roles that this device can have: temperature, tank, battery, digitalinput, humidity
-            # Mandatory, list of dict representing the device advertising data with the following keys :
-            'regs': [],
             'dev_instance': 20,         # Optional,  int, base internal id that will be incremented to be unique
-            # - offset : byte offset, i.e. data start position
-            # - shift	 : bit offset, in case the data is not "byte aligned"
-            # - type   : type of the data
-            # - bits   : length of the data in bits, mandatory if type is not set
-            # - scale  : scale of the data, used with bias to compute the data with : data / scale + bias
-            # - bias   : bias to be applied with the scale
-            # - flags  : Can be : REG_FLAG_BIG_ENDIAN, REG_FLAG_INVALID
-            # - inval  : If flag REG_FLAG_INVALID is set, value that will invalidate the data and have it ignored
-            # - xlate  : Name of a method to be executed after data parsing
-            # - format : Format of the data
-            # Optional,  list of dict, settings that could change device behavior or data interpretation.
-            'settings': [],
-            'alarms': [],               # Optional,  list of dict, possible alarms raised by the device, defined with :
-            # - name      : Name of the alarm
-            # - item      : Type of alarm to raise
-            # - flags     : list of :
-            #    - "ALARM_FLAG_CONFIG" if the alarm targets a config
-            #    - "ALARM_FLAG_HIGH" if the alarm should be triggered when data is higher than level
-            # - level     : Float value defining the alarm level
-            # - get_level : Name of a method to compute level if needed
-            # - hyst      : Hysterisis value to add to level when the alarm is active
-            # - active    : &high_active_props
-            # - restore   : &high_restore_props
-            #
-            # - name	  : "High",
-            # - item	  : "Level",
-            # - flags	  : ALARM_FLAG_HIGH | ALARM_FLAG_CONFIG,
-            # - active  : &high_active_props,
-            # - restore : &high_restore_props,
-            #
-            # .name	= "LowBattery",
-            # .item	= "BatteryVoltage",
-            # .hyst	= 0.4,
-            # .get_level = ruuvi_lowbat,
-            #
-            # .name	= "LowBattery",
-            # .item	= "BatteryVoltage",
-            # .level	= 3.2,
-            # .hyst	= 0.4,
-            'data': {},                 # Optional,  dict, custom dict for storing specific data to be passed to custom role and device methods
+            'roles': [],                # Mandatory, list of str in : temperature, tank, battery, digitalinput, humidity
+            'regs': [],                 # Mandatory, list of dict, device advertising data, defined with :
+                                        # - offset : byte offset, i.e. data start position
+                                        # - shift	 : bit offset, in case the data is not "byte aligned"
+                                        # - type   : type of the data
+                                        # - bits   : length of the data in bits, mandatory if type is not set
+                                        # - scale  : scale of the data, used with bias to set data with: data / scale + bias
+                                        # - bias   : bias to be applied with the scale
+                                        # - flags  : Can be : REG_FLAG_BIG_ENDIAN, REG_FLAG_INVALID
+                                        # - inval  : If flag REG_FLAG_INVALID is set, value that invalidate the data
+                                        # - xlate  : Name of a method to be executed after data parsing
+                                        # - format : Format of the data
+            'settings': [],             # Optional,  list of dict, settings that could be set through UI
+            'alarms': [],               # Optional,  list of dict, raisable alarms, defined with :
+                                        # - name      : Name of the alarm
+                                        # - item      : Type of alarm to raise
+                                        # - flags     : list of :
+                                        #    - "ALARM_FLAG_CONFIG" if the alarm targets a config
+                                        #    - "ALARM_FLAG_HIGH" if the alarm should be triggered when data is higher than level
+                                        # - level     : Float value defining the alarm level
+                                        # - get_level : Name of a method to compute level if needed
+                                        # - hyst      : Hysterisis value to add to level when the alarm is active
+                                        # - active    : &high_active_props
+                                        # - restore   : &high_restore_props
+                                        #
+                                        # - name	  : "High",
+                                        # - item	  : "Level",
+                                        # - flags	  : ALARM_FLAG_HIGH | ALARM_FLAG_CONFIG,
+                                        # - active  : &high_active_props,
+                                        # - restore : &high_restore_props,
+                                        #
+                                        # .name	= "LowBattery",
+                                        # .item	= "BatteryVoltage",
+                                        # .hyst	= 0.4,
+                                        # .get_level = ruuvi_lowbat,
+                                        #
+                                        # .name	= "LowBattery",
+                                        # .item	= "BatteryVoltage",
+                                        # .level	= 3.2,
+                                        # .hyst	= 0.4,
+            'data': {},                 # Optional,  dict, custom dict passed to custom role and device methods
         }
 
     def init(self):
@@ -86,10 +83,11 @@ class BleDevice(object):
         """
         # Setting configuration
         BleDevice.DEVICE_INSTANCES['dev_mac'] = self
+        self._plog = f"{self.info['dev_mac']} ({self.info['DeviceName']}):"
         self.check_configuration()
         self.load_configuration()
 
-        logging.info(f"Initializing device {self.info['DeviceName']} {self.info['dev_mac']} ...")
+        logging.debug(f"{self._plog} initializing device ...")
 
         # Setting ble service
         self.configure_dbus_ble_service()
@@ -98,14 +96,14 @@ class BleDevice(object):
         self.load_dbus_services()
         for dbus_service in self._dbus_services.values():
             self.init_device_dbus_service(dbus_service)
-        logging.info(f"Device {self.info['DeviceName']} {self.info['dev_mac']} initialized")
+        logging.info(f"{self._plog} initialized")
 
     def handle_mfg(self, manufacturer_data: bytes):
         """
         Optional overload, check product id to adapt to various harware if any and/or implement specific parsing logic.
         Returns 0 if this class can manage the device, anything else if it can't.
         """
-        logging.info(f"Parsing advertising from device {self.info['DeviceName']} {self.info['dev_mac']}")
+        logging.info(f"{self._plog} parsing advertising '{manufacturer_data}'")
 
         if not self.is_enabled():
             return
@@ -138,7 +136,7 @@ class BleDevice(object):
 
     @staticmethod
     def load_device_classes(execution_path: str):
-        logging.info("Loading device classes ...")
+        logging.debug("Device classes: loading...")
         device_classes_prefix = f"{os.path.splitext(os.path.basename(__file__))[0]}_"
 
         # Loading manufacturer specific classes
@@ -147,7 +145,7 @@ class BleDevice(object):
                 module_name = os.path.splitext(filename)[0]
 
                 # Import the module from file
-                logging.debug(f"Loading device class {filename} ...")
+                logging.debug(f"Device classes: loading module {filename}")
                 spec = importlib.util.spec_from_file_location(module_name, filename)
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
@@ -159,59 +157,54 @@ class BleDevice(object):
                         # instance.check_configuration()
                         BleDevice.DEVICE_CLASSES[obj.MANUFACTURER_ID] = obj
                         break
-                logging.debug(f"Device class {filename} loaded")
-        logging.info(f"Device classes loaded: {BleDevice.DEVICE_CLASSES}")
+                logging.debug(f"Device classes: class {filename} loaded")
+        logging.info(f"Device classes: {BleDevice.DEVICE_CLASSES}")
 
     @staticmethod
     def byteToSignedInt(byte: bytes) -> int:
         return byte if byte < 128 else byte - 256
 
     def check_configuration(self):
-        for key in ['manufacturer_id', 'product_id', 'product_name', 'dev_instance', 'dev_prefix', 'roles', 'regs', 'settings', 'alarms']:
+        for key in ['manufacturer_id', 'product_id', 'product_name', 'DeviceName', 'dev_instance', 'dev_prefix', 'roles', 'regs', 'settings', 'alarms']:
             if key not in self.info:
-                raise ValueError(f"Configuration '{key}' is missing")
+                raise ValueError(f"{self._plog} configuration '{key}' is missing")
             if self.info[key] is None:
-                raise ValueError(f"Configuration '{key}' can not be None")
+                raise ValueError(f"{self._plog} Configuration '{key}' can not be None")
 
         for number in ['manufacturer_id', 'product_id', 'dev_instance']:
             if not isinstance(self.info[number], int):
-                raise ValueError(f"Configuration '{number}' must be an integer")
+                raise ValueError(f"{self._plog} Configuration '{number}' must be an integer")
 
         for list_key in ['roles', 'regs', 'settings', 'alarms']:
             if not isinstance(self.info[list_key], list):
-                raise ValueError(f"Configuration '{list_key}' must be a list")
+                raise ValueError(f"{self._plog} Configuration '{list_key}' must be a list")
 
         for list_mandatory in ['roles', 'regs']:
             if self.info[list_mandatory].__len__() < 1:
-                raise ValueError(f"Configuration '{list_mandatory}' must be contains at least one element")
+                raise ValueError(f"{self._plog} Configuration '{list_mandatory}' must have at least one element")
 
         for index, setting in enumerate(self.info['settings']):
             if 'name' not in setting:
-                raise ValueError(
-                    f"Missing 'name' in setting at index {index} of {self.info['DeviceName']} device class")
+                raise ValueError(f"{self._plog} Missing 'name' in setting at index {index}")
             if 'props' not in setting:
-                raise ValueError(
-                    f"Missing 'props' definition in setting {setting['name']} of {self.info['DeviceName']} device class")
+                raise ValueError(f"{self._plog} Missing 'props' definition in setting {setting['name']}")
             for key in ['def', 'min', 'max']:
                 if key not in setting['props']:
-                    raise ValueError(
-                        f"Missing key '{key}' in setting {setting['name']} of {self.info['DeviceName']} device class")
+                    raise ValueError(f"{self._plog} Missing key '{key}' in setting {setting['name']}")
 
         for index, alarm in enumerate(self.info['alarms']):
             if 'name' not in alarm:
-                raise ValueError(f"Missing 'name' in alarm at index {index} of {self.info['DeviceName']} device class")
+                raise ValueError(f"{self._plog} Missing 'name' in alarm at index {index}")
             for key in ['item', 'active', 'restore']:
                 if key not in alarm:
-                    raise ValueError(
-                        f"Missing key '{key}' in alarm {alarm['name']} of {self.info['DeviceName']} device class")
+                    raise ValueError(f"{self._plog} Missing key '{key}' in alarm {alarm['name']}")
             for sig in ['active', 'restore']:
                 for key in ['def', 'min', 'max']:
                     if key not in alarm[sig]:
-                        raise ValueError(
-                            f"Missing key '{key}' in field {sig} of alarm {alarm['name']} of {self.info['DeviceName']} device class")
+                        raise ValueError(f"{self._plog} Missing key '{key}' in field {sig} of alarm {alarm['name']}")
             if (alarm.get('flags', None) and 'ALARM_FLAG_CONFIG' not in alarm['flags']) and alarm.get('level', None) is None and alarm.get('getlevel', None) is None:
                 raise ValueError(
-                    f"Alarm {alarm['name']} of {self.info['DeviceName']} device class must define a level. Set 'level' or 'getlevel' fields or use dbus configuration with 'ALARM_FLAG_CONFIG' flag.")
+                    f"{self._plog} Alarm {alarm['name']}must define a level with a 'level' or a 'getlevel' fields or using dbus configuration with 'ALARM_FLAG_CONFIG' flag.")
 
     def load_configuration(self):
         self.info['manufacturer_id'] = self.MANUFACTURER_ID
@@ -239,9 +232,9 @@ class BleDevice(object):
     def load_dbus_services(self):
         for role_name in self.info['roles']:
             if (role_instance := BleRole.get_role_instance(role_name)) is None:
-                raise ValueError(f"Can not find role '{role_name}' declared in device class {self.info['DeviceName']}")
+                raise ValueError(f"{self._plog} can not find role '{role_name}'")
 
-            logging.debug(f"Adding role '{role_name}' instance to device '{self.info['DeviceName']}'")
+            logging.debug(f"{self._plog} adding role '{role_name}'")
             self._dbus_services[role_name] = DbusDeviceService(self, role_instance)
 
     def init_settings(self, dbus_service: DbusDeviceService, settings: list):

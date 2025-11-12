@@ -6,7 +6,7 @@ import logging
 
 # Import Victron Energy's python library.
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), 'ext', 'velib_python'))
-from vedbus import VeDbusItemImport, VeDbusItemExport
+from vedbus import VeDbusItemImport
 
 
 class DbusSettingsService(object):

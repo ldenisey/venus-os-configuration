@@ -20,7 +20,7 @@ class BleRole(object):
         """
         Optional method executed during configuration, when the first advertising of this device has been detected.
         """
-        pass
+        self._plog = f"{self.info['name']} :"
 
     def update(self, ble_device, values: dict):
         """
@@ -36,7 +36,7 @@ class BleRole(object):
 
     @staticmethod
     def load_role_classes(execution_path: str):
-        logging.debug("Loading role instances ...")
+        logging.debug("Role classes: loading...")
         role_classes_prefix = f"{os.path.splitext(os.path.basename(__file__))[0]}_"
 
         # Loading manufacturer specific classes
@@ -45,11 +45,11 @@ class BleRole(object):
                 module_name = os.path.splitext(filename)[0]
 
                 # Import the module from file
-                logging.debug(f"Loading role module {module_name} ...")
+                logging.debug(f"Role classes: loading module {module_name} ...")
                 spec = importlib.util.spec_from_file_location(module_name, filename)
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
-                logging.debug(f"Role module {module_name} loaded")
+                logging.debug(f"Role classes: module {module_name} loaded")
 
                 # Check and import
                 for name, obj in inspect.getmembers(module, inspect.isclass):
@@ -58,47 +58,42 @@ class BleRole(object):
                         instance.check_configuration()
                         BleRole._ROLE_INSTANCE[instance.info['name']] = instance
                         break
-                logging.debug(f"Role class {module_name} instanciated")
-        logging.info(f"Role instances loaded: {BleRole._ROLE_INSTANCE}")
+                logging.debug(f"Role classes: class {module_name} instanciated")
+        logging.info(f"Role classes: {BleRole._ROLE_INSTANCE}")
 
     def check_configuration(self):
         for key in ['name', 'settings', 'alarms']:
             if key not in self.info:
-                raise ValueError(f"Configuration '{key}' is missing")
+                raise ValueError(f"{self._plog} configuration '{key}' is missing")
             if self.info[key] is None:
-                raise ValueError(f"Configuration '{key}' can not be None")
+                raise ValueError(f"{self._plog} Configuration '{key}' can not be None")
 
         for list_key in ['settings', 'alarms']:
             if not isinstance(self.info[list_key], list):
-                raise ValueError(f"Configuration '{list_key}' must be a list")
+                raise ValueError(f"{self._plog} Configuration '{list_key}' must be a list")
 
         for index, setting in enumerate(self.info['settings']):
             if 'name' not in setting:
-                raise ValueError(
-                    f"Missing 'name' in setting at index {index} of {self.info['DeviceName']} device class")
+                raise ValueError(f"{self._plog} Missing 'name' in setting at index {index}")
             if 'props' not in setting:
-                raise ValueError(
-                    f"Missing 'props' definition in setting {setting['name']} of {self.info['DeviceName']} device class")
+                raise ValueError(f"{self._plog} Missing 'props' definition in setting {setting['name']}")
             for key in ['def', 'min', 'max']:
                 if key not in setting['props']:
-                    raise ValueError(
-                        f"Missing key '{key}' in setting {setting['name']} of {self.info['DeviceName']} device class")
+                    raise ValueError(f"{self._plog} Missing key '{key}' in setting {setting['name']}")
 
         for index, alarm in enumerate(self.info['alarms']):
             if 'name' not in alarm:
-                raise ValueError(f"Missing 'name' in alarm at index {index} of {self.info['DeviceName']} device class")
+                raise ValueError(f"{self._plog} Missing 'name' in alarm at index {index}")
             for key in ['item', 'active', 'restore']:
                 if key not in alarm:
-                    raise ValueError(
-                        f"Missing key '{key}' in alarm {alarm['name']} of {self.info['DeviceName']} device class")
+                    raise ValueError(f"{self._plog} Missing key '{key}' in alarm {alarm['name']}")
             for sig in ['active', 'restore']:
                 for key in ['def', 'min', 'max']:
                     if key not in alarm[sig]:
-                        raise ValueError(
-                            f"Missing key '{key}' in field {sig} of alarm {alarm['name']} of {self.info['DeviceName']} device class")
+                        raise ValueError(f"{self._plog} Missing key '{key}' in field {sig} of alarm {alarm['name']}")
             if (alarm.get('flags', None) and 'ALARM_FLAG_CONFIG' not in alarm['flags']) and alarm.get('level', None) is None and alarm.get('getlevel', None) is None:
                 raise ValueError(
-                    f"Alarm {alarm['name']} of {self.info['DeviceName']} device class must define a level. Set 'level' or 'getlevel' fields or use configuration with 'ALARM_FLAG_CONFIG' flag.")
+                    f"{self._plog} Alarm {alarm['name']}must define a level with a 'level' or a 'getlevel' fields or using dbus configuration with 'ALARM_FLAG_CONFIG' flag.")
 
     def get_name(self):
         return self.info['name']

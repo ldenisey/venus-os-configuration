@@ -35,32 +35,28 @@ class DbusBleService(object):
         # Check and create ble service
         if self._BLE_SERVICENAME in dbus_iface_names:
             if create:
-                logging.error(
-                    f"DBus service {DbusBleService._BLE_SERVICENAME} is already running. Please stop it first.")
+                logging.error(f"Service already running, stop it and restart.")
                 sys.exit(1)
             else:
-                logging.info(f"Trying to take ownership of existing dbus service '{DbusBleService._BLE_SERVICENAME}'")
+                logging.info(f"Service already running, trying to take ownership")
                 owned = False
-                bus_name = dbus.service.BusName(DbusBleService._BLE_SERVICENAME, bus=self._bus, replace_existing=True)
-                owner = self._bus.get_name_owner(DbusBleService._BLE_SERVICENAME)
+                owner = self._bus.get_name_owner(self._BLE_SERVICENAME)
                 pid = self._bus.call_blocking("org.freedesktop.DBus", "/org/freedesktop/DBus",
-                                        "org.freedesktop.DBus", "GetConnectionUnixProcessID", "s", [owner])
+                                              "org.freedesktop.DBus", "GetConnectionUnixProcessID", "s", [owner])
                 try:
                     ps_info = subprocess.check_output(
                         f"ps | grep -i {pid} | grep -v grep", shell=True).decode().strip()
-                    logging.debug(
-                        f"Current owner of {DbusBleService._BLE_SERVICENAME}: dbus owner='{owner}' PID='{pid}'\n{ps_info}")
+                    logging.debug(f"owner='{owner}' PID='{pid}'\n{ps_info}")
                     if os.environ["PROCESS_NAME"] in ps_info:
                         owned = True
                 except subprocess.CalledProcessError:
-                    logging.warning(f"Can not get service '{DbusBleService._BLE_SERVICENAME}' process info")
+                    logging.warning(f"Can not get process info")
                 if not owned:
-                    raise dbus.exceptions.NameExistsException(
-                        f"Can get ownership of '{DbusBleService._BLE_SERVICENAME}'. Stop it and restart.")
+                    raise dbus.exceptions.NameExistsException(f"Can not get ownership. Stop it and restart.")
 
         else:
-            logging.info(f"Creating dbus '{DbusBleService._BLE_SERVICENAME}' service on bus {self._bus}")
-            self._local_service = VeDbusService(DbusBleService._BLE_SERVICENAME, self._bus, False)
+            logging.info(f"Creating dbus service {self._BLE_SERVICENAME} on bus {self._bus}")
+            self._local_service = VeDbusService(self._BLE_SERVICENAME, self._bus, False)
             self._local_service.register()
 
             self.init_continuous_scanning()
@@ -103,7 +99,7 @@ class DbusBleService(object):
 
     def set_proxy_callback(self, item_path: str, setting_item: VeDbusItemImport, callback=None):
         def _callback(change_path, new_value):
-            logging.debug(f"Received update on {DbusBleService._BLE_SERVICENAME}@{change_path}: {new_value}")
+            logging.debug(f"Received update on {self._BLE_SERVICENAME}@{change_path}: {new_value}")
             if change_path != item_path:
                 return
             if new_value != setting_item.get_value():

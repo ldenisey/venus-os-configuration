@@ -62,7 +62,7 @@ class DbusDeviceService(object):
             raise ValueError(
                 f"Can not get dev_instance for device {self._ble_device.info['DeviceName']} and role {self.ble_role.get_name()}")
 
-        logging.debug(f"Initializing dbus '{self._service_name}'")
+        logging.debug(f"{self._ble_device._plog} initializing dbus '{self._service_name}'")
         self._dbus_service = VeDbusService(self._service_name, self._bus, False)
 
         self._dbus_service.add_mandatory_paths(
@@ -86,13 +86,13 @@ class DbusDeviceService(object):
     def connect(self):
         if self.is_connected():
             return
-        logging.info(f"Registrating dbus '{self._service_name}' service on bus {self._bus}")
+        logging.info(f"{self._ble_device._plog} registrating '{self._service_name}' dbus service on bus {self._bus}")
         self._dbus_service.register()
 
     def disconnect(self):
         if not self.is_connected():
             return
-        logging.warning(f"Releasing device '{self._ble_device.info['DeviceName']}' dbus service")
+        logging.warning(f"{self._ble_device._plog} releasing '{self._service_name}' dbus service")
         self._dbus_service._dbusname.release()
 
     def _clear_path(self, path: str) -> str:
@@ -110,11 +110,12 @@ class DbusDeviceService(object):
 
     def _get_proxy_callback(self, item_path: str, setting_item: VeDbusItemImport, callback=None) -> any:
         def _callback(path: str, new_value: any):
-            logging.debug(f"Received update on {self._service_name}@{path}: {new_value}")
+            logging.debug(f"{self._ble_device._plog} received update on {self._service_name}@{path}: {new_value}")
             if path != item_path:
                 return
             if new_value != setting_item.get_value():
-                logging.debug(f"Updating {setting_item.serviceName}@{setting_item.path} to {new_value}")
+                logging.debug(
+                    f"{self._ble_device._plog} updating {setting_item.serviceName}@{setting_item.path} to {new_value}")
                 setting_item.set_value(new_value)
             if callback:
                 callback(new_value)

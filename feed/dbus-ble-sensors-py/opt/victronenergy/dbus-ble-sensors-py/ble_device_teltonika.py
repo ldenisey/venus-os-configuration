@@ -17,7 +17,7 @@ class BleDeviceTeltonika(BleDevice):
             'manufacturer_id': BleDeviceTeltonika.MANUFACTURER_ID,
             'product_id': 0x3042,
             'product_name': 'TeltonikaEyeSensor',
-            'DeviceName': 'Teltonika EyeSensor',
+            # 'DeviceName': 'Teltonika EyeSensor',
             'dev_instance': 20,
             'dev_prefix': 'teltonika',
             # 'roles': ['temperature', 'digitalinput'],

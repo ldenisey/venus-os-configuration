@@ -27,7 +27,8 @@ class DbusBleSensors(object):
     # Main class for the D-bus BLE Sensors python service. Extend base C service 'dbus-ble-sensors'
     # to allow community integration of unsupported (by Victron Energy team) BLE sensors.
     # TODO: Handle timeout
-    # TODO: Handle scanning conflicts with VE dbus-ble-sensors
+    # TODO: Is there a way to communicate with official dbus-ble-sensors service ?
+    # TODO: Handle multiple interface parallel scanning
     # Cf.
     # - https://github.com/victronenergy/dbus-ble-sensors/
     # - https://github.com/victronenergy/node-red-contrib-victron/blob/master/src/nodes/victron-virtual.js
@@ -82,39 +83,39 @@ class DbusBleSensors(object):
     def _on_interfaces_added(self, path, interfaces):
         if not str(path).startswith('/org/bluez'):
             return
-        logging.debug(f"Interfaces added callback: {path}, {interfaces}")
+        name = path.split('/')[-1]
+        logging.debug(f"{name}: interfaces added callback triggered for {interfaces}")
         if 'org.bluez.Adapter1' in interfaces:
             adapter = self._dbus.get_object('org.bluez', path)
             props = dbus.Interface(adapter, 'org.freedesktop.DBus.Properties')
             mac = props.Get('org.bluez.Adapter1', 'Address')
-            name = path.split('/')[-1]
             # Saving adapter
             if name == 'hci1':  # TODO debug and remove
-                logging.info(f"Skipping adapter {name}")
+                logging.warning(f"{name}: manually skipping adapter")
                 return
-            logging.info(f"Adding adapter {name} found at {path} with address: {mac}")
+            logging.info(f"{name}: adding adapter, path='{path}', address='{mac}'")
             self._adapters.append(name)
             self._dbus_ble_service.add_ble_adapter(name, mac)
 
     def _on_interfaces_removed(self, path, interfaces):
         if not str(path).startswith('/org/bluez'):
             return
-        logging.debug(f"Interfaces removed callback: {path}, {interfaces}")
+        name = path.split('/')[-1]
+        logging.debug(f"{name}: interfaces removed callback triggered for {interfaces}")
         if 'org.bluez.Adapter1' in interfaces:
             # Remove adapter
-            name = path.split('/')[-1]
             self._dbus_ble_service.remove_ble_adapter(name)
             self._adapters.remove(name)
-            logging.info(f"Adapter removed at {path}")
+            logging.info(f"{name}: Adapter removed")
 
     async def _scan(self, adapter: str):
         def _scan_callback(device, advertisement_data):
-            logging.debug(f"Scanned device: {device.name} {device.address} {advertisement_data}")
-            if advertisement_data.manufacturer_data is None or len(advertisement_data.manufacturer_data) < 1:
-                logging.debug(f"Ignoring device {device.name} {device.address}: no manufacturer data")
-                return
-
             dev_mac = "".join(device.address.split(':')).lower()
+            dev_name = device.name
+            logging.debug(f"{dev_mac} ({dev_name}): received advertisement '{advertisement_data}'")
+            if advertisement_data.manufacturer_data is None or len(advertisement_data.manufacturer_data) < 1:
+                logging.debug(f"{dev_mac} ({dev_name}): ignoring advertisements without manufacturer data")
+                return
 
             # First time device initialization
             # Loop through manufacturer data fields, even though most devices only use one
@@ -123,19 +124,19 @@ class DbusBleSensors(object):
                     device_class = BleDevice.DEVICE_CLASSES.get(man_id, None)
                     if device_class is None:
                         logging.debug(
-                            f"Ignoring device {device.name} {device.address}: no device class for manufacturer id {man_id}")
+                            f"{dev_mac} ({dev_name}): ignoring manufacturer '{man_id}' without a configuration class")
                         return
 
                     # Run device specific parsing
-                    logging.debug(f"Initializing device class {device_class} for: {device.name} {device.address}")
-                    dev_instance = device_class(dev_mac)
+                    logging.debug(f"{dev_mac} ({dev_name}): initializing device class {device_class}")
+                    dev_instance = device_class(dev_mac, dev_name)
                     dev_instance.init()
 
                 # Parsing data
-                logging.debug(f"Parsing data for device: {device.name} {device.address}")
+                logging.debug(f"{dev_mac} ({dev_name}): parsing manufacturer data")
                 dev_instance.handle_mfg(man_data)
 
-        logging.info(f"{adapter} - Scanning ...")
+        logging.info(f"{adapter}: Scanning ...")
         try:
             await bleak.BleakScanner.discover(  # TODO force timeout
                 timeout=self._SCAN_TIMEOUT,
@@ -143,21 +144,20 @@ class DbusBleSensors(object):
                 return_adv=True,
                 detection_callback=_scan_callback
             )
-            logging.info(f"{adapter} - Scan finished")
+            logging.info(f"{adapter}: Scan finished")
         except Exception as e:
-            logging.error(f"{adapter} - Scan error: {e}")
+            logging.error(f"{adapter}: Scan error: {e}")
 
     async def scan_loop(self):
         while True:
-            logging.info(f"Adapters: {self._adapters}")
             scan_tasks = [asyncio.create_task(self._scan(adapter)) for adapter in self._adapters]
             await asyncio.gather(*scan_tasks)
 
             if self._dbus_ble_service.get_continuous_scanning():
-                logging.info(f"Continuous scan: restarting scan")
+                logging.info(f"{self._adapters}: continuous scan on, restarting scan immediately")
             else:
                 delay = self._SCAN_INTERVAL_STANDARD - self._SCAN_TIMEOUT
-                logging.info(f"Standard scan: pausing scan for {delay} seconds")
+                logging.info(f"{self._adapters}: continuous scan off, pausing for {delay} seconds")
                 await asyncio.sleep(delay)
 
 
