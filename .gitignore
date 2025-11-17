@@ -7,3 +7,5 @@ render.experimental.xml
 /*.code-workspace
 /feed/*.hash
 /feed/build-feed.sh
+/feed/dbus-ble-sensors-py/
+**/__pycache__/

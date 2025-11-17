@@ -12,6 +12,20 @@ OE: blank-display-device
 License: MIT
 Priority: optional
 
+Package: dbus-ble-sensors-py
+Version: 1.0.0
+Section: base
+Architecture: all
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: 12293e5f64721c7a65dca167be460344
+Size: 425430
+Filename: dbus-ble-sensors-py_1.0.0_all.ipk
+Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-ble-sensors-py
+Description: Add support to unsupported bluetooth devices
+OE: dbus-ble-devices
+License: MIT
+Priority: optional
+
 Package: dbus-relay-board
 Version: 1.0.0
 Section: utilities
