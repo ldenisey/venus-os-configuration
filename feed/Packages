@@ -17,8 +17,8 @@ Version: 1.0.0
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: fc3a0c04b63bab4160ae798bcb1d7059
-Size: 784458
+MD5Sum: be2fce2843f132b84efb72755873ed17
+Size: 18188
 Filename: dbus-ble-sensors-py_1.0.0_all.ipk
 Source: https://github.com/ldenisey/dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices

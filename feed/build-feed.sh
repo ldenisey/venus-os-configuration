@@ -4,6 +4,7 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 build() {
     if [ -f "$1/CONTROL/prepkg.sh" ]; then
         echo "Executing prepkg.sh script"
+        chmod +x "$1/CONTROL/prepkg.sh"
         "$1/CONTROL/prepkg.sh"
     fi
     opkg-build "$1"
