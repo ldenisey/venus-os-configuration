@@ -20,7 +20,7 @@ opkg install "https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/
 
 ### Udev configuration
 
-When plugging a USB adapter, Venus OS only detects a USB adapter, it can not know what device is behind. 
+When plugging a USB Serial adapter, Venus OS only detects a USB adapter, it can not know what device is behind. 
 
 Here we will configure [udev](https://en.wikipedia.org/wiki/Udev) to identify the adapter and assign it to *dbus-relay-board* service.
 
@@ -45,11 +45,11 @@ are 2 adapters :
 - *QinHeng Electronics HL-340 USB-Serial adapter*, a cheap RS485 adapter, with vendor id *1a86* and model id *7523*
 - *Future Technology Devices International, Ltd FT232 Serial (UART) IC*, a better quality RS485 adapter, with vendor id *0403* and model id *6001*
 
-#### Get adapter dev path
+#### Get adapter dev name
 
 Run the following command, replacing *ID_MODEL_ID* and *ID_VENDOR_ID* values with your own :
 ``` bash
-udevadm info --export-db | awk '/^P:/ {found=0; model=0; vendor=0; dev=""} /ID_MODEL_ID=6001/ {model=1} /ID_VENDOR_ID=0403/ {vendor=1} /DEVNAME=\/dev\/tty/ {dev=$2}  /^$/ {if(model && vendor && dev) {print dev}}' | cut -d= -f2
+udevadm info --export-db | awk '/^P:/ {model=0; vendor=0; dev=""} /ID_MODEL_ID=6001/ {model=1} /ID_VENDOR_ID=0403/ {vendor=1} /DEVNAME=\/dev/ {dev=$2} /^$/ {if(model && vendor && dev) {print dev}}' | cut -d= -f2
 ```
 
 For example, it returns a path like :

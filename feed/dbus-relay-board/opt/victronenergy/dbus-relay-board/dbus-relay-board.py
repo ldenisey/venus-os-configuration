@@ -2,7 +2,6 @@
 
 """
 Relay board dbus service.
-This is a dummy service to test the dbus interface of the relay board.
 """
 from gi.repository import GLib
 import logging

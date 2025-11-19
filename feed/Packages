@@ -17,10 +17,10 @@ Version: 1.0.0
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 12293e5f64721c7a65dca167be460344
-Size: 425430
+MD5Sum: fc3a0c04b63bab4160ae798bcb1d7059
+Size: 784458
 Filename: dbus-ble-sensors-py_1.0.0_all.ipk
-Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-ble-sensors-py
+Source: https://github.com/ldenisey/dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices
 OE: dbus-ble-devices
 License: MIT
@@ -37,20 +37,6 @@ Filename: dbus-relay-board_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-relay-board
 Description: Add support to RS485, RS232 and TTL232 relay boards
 OE: dbus-relay-board
-License: MIT
-Priority: optional
-
-Package: dbus-teltonika-eye-sensor
-Version: 1.0.0
-Section: base
-Architecture: all
-Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: ddaa96fc10d2df362b0b88da2e2cbe93
-Size: 159666
-Filename: dbus-teltonika-eye-sensor_1.0.0_all.ipk
-Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-teltonika-eye-sensor
-Description: Add support to Teltonika Eye Sensor bluetooth device
-OE: dbus-teltonika-eye-sensor
 License: MIT
 Priority: optional
 
