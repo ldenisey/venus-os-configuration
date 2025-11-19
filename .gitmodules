@@ -1,0 +1,3 @@
+[submodule "feed/dbus-ble-sensors-py"]
+	path = feed/dbus-ble-sensors-py
+	url = https://github.com/ldenisey/dbus-ble-sensors-py
