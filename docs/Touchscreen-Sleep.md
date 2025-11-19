@@ -82,7 +82,7 @@ opkg install https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/m
 reboot
 ```
 
-If it works, make it persistent to firmware upgrades by [installing mod-persist](./VenusOS-Mod_persist.md.md#how-to-install-it) then :
+If it works, make it persistent to firmware upgrades by [installing mod-persist](https://github.com/ldenisey/venus-os-mod-persist/blob/main/README.md#how-to-install-it) then :
 ``` bash
 persist-opkg install blank-display-device
 ```

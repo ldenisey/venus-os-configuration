@@ -17,26 +17,12 @@ Version: 1.0.0
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: fc3a0c04b63bab4160ae798bcb1d7059
-Size: 784458
+MD5Sum: e11e06c1b0cb63882659b36c7bba1985
+Size: 29340
 Filename: dbus-ble-sensors-py_1.0.0_all.ipk
 Source: https://github.com/ldenisey/dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices
 OE: dbus-ble-devices
-License: MIT
-Priority: optional
-
-Package: dbus-relay-board
-Version: 1.0.0
-Section: utilities
-Architecture: all
-Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 01aebc81b51bd2f2d3cefd7ca7c2368a
-Size: 16100
-Filename: dbus-relay-board_1.0.0_all.ipk
-Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/dbus-relay-board
-Description: Add support to RS485, RS232 and TTL232 relay boards
-OE: dbus-relay-board
 License: MIT
 Priority: optional
 
@@ -94,8 +80,8 @@ Depends: opkg
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: d03f8eec52596defbb854f93d9e3e18a
-Size: 4568
+MD5Sum: cb028aeca10aa4d18f53740d425f2ec1
+Size: 4686
 Filename: mod-persist_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/mod-persist
 Description: User modification persistence utility package

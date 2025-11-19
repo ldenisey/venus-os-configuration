@@ -1,3 +1,8 @@
 [submodule "feed/dbus-ble-sensors-py"]
 	path = feed/dbus-ble-sensors-py
-	url = https://github.com/ldenisey/dbus-ble-sensors-py
+	url = https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
+	branch = master
+[submodule "feed/mod-persist"]
+	path = feed/mod-persist
+	url = https://github.com/ldenisey/venus-os-mod-persist
+	branch = master

@@ -20,7 +20,7 @@ opkg install "https://github.com/ldenisey/venus-os-configuration/raw/refs/heads/
 ```
 
 
-Unplug/replug the screen or restart your device and test your screen. If it works, make the driver persistent to firmware upgrades by [installing mod-persist](./VenusOS-Mod_persist.md.md#how-to-install-it) then :
+Unplug/replug the screen or restart your device and test your screen. If it works, make the driver persistent to firmware upgrades by [installing mod-persist](https://github.com/ldenisey/venus-os-mod-persist/blob/main/README.md#how-to-install-it) then :
 ``` bash
 persist-opkg install "kernel-module-hid-multitouch-$(uname -r)"
 ```

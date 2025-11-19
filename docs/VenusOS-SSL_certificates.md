@@ -31,7 +31,7 @@ Here are the configuration files that uses certificates :
 You can update those files to set your own certificates.  
 As they are not in */data/* folder, they will be reset during every firmware ugrades.
 
-To make those change persistent, [install mod-persist](./VenusOS-Mod_persist.md.md#how-to-install-it) then create a patch file for each configuration file.  
+To make those change persistent, [install mod-persist](https://github.com/ldenisey/venus-os-mod-persist/blob/main/README.md#how-to-install-it) then create a patch file for each configuration file.  
 For example, for the Gui :
 
 ``` bash

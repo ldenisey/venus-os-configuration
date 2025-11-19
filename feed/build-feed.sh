@@ -2,11 +2,12 @@
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 build() {
-    if [ -f "$1/CONTROL/prepkg.sh" ]; then
+    if [ -f "$1/src/CONTROL/prepkg.sh" ]; then
         echo "Executing prepkg.sh script"
-        "$1/CONTROL/prepkg.sh"
+        chmod +x "$1/src/CONTROL/prepkg.sh"
+        "$1/src/CONTROL/prepkg.sh"
     fi
-    opkg-build "$1"
+    opkg-build "$1/src"
 }
 
 # Build package only if changes are detected
@@ -20,7 +21,7 @@ for dir in "$SCRIPT_DIR"/*/; do
     PKG_HASH_FILE="$SCRIPT_DIR/$PKG_NAME.hash"
 
     # Compute current hash
-    CURRENT_HASH=$(find "$dir" -type f -exec sha256sum {} \; | sort | sha256sum | awk '{print $1}')
+    CURRENT_HASH=$(find "$dir/src" -type f -exec sha256sum {} \; | sort | sha256sum | awk '{print $1}')
 
     if [ -f "$PKG_HASH_FILE" ]; then
         OLD_HASH=$(cat "$PKG_HASH_FILE")
@@ -41,4 +42,6 @@ done
 # Rebuild index files
 echo ""
 echo "Rebuilding index files..."
-opkg-make-index -p Packages "$SCRIPT_DIR"
+rm "$SCRIPT_DIR"/Package*
+opkg-make-index -p "$SCRIPT_DIR/Packages" "$SCRIPT_DIR"
+mv -f *.ipk "$SCRIPT_DIR/" # No opkg-make-index option to specify output dir
