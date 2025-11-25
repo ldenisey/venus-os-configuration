@@ -42,4 +42,6 @@ done
 # Rebuild index files
 echo ""
 echo "Rebuilding index files..."
-opkg-make-index -p Packages "$SCRIPT_DIR"
+rm "$SCRIPT_DIR/Package*"
+opkg-make-index -p "$SCRIPT_DIR/Packages" "$SCRIPT_DIR"
+mv -f *.ipk "$SCRIPT_DIR/" # No opkg-make-index option to specify output dir
