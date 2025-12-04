@@ -5,9 +5,8 @@ Description: hid multitouch kernel module
 Section: kernel
 Priority: optional
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-License: GPL-2.0-only
+License: MIT
 Architecture: einstein
-OE: linux-venus
 Homepage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-4
 Depends: kernel-6.12.23-venus-4
 Provides: kernel-module-hid-multitouch
