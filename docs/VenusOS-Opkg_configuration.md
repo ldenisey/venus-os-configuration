@@ -81,14 +81,14 @@ If needed, add preinst, postinst, prerm and/or postrm files in package/CONTROL/.
 
 ### Create package
 
-### Automated command
+#### Automated command
 
 ``` bash
 cd .. # in ./feed
 opkg-build package
 ```
 
-### Manual commands
+#### Manual commands
 
 To manually create the package:
 ``` bash
@@ -107,3 +107,13 @@ To decompress a package : `ar x package.ipk`
 cd .. # in ./feed
 opkg-make-index -p Packages .
 ```
+
+## Tips and tricks
+
+### Get ackage installed version
+
+To get *my-package* installed version :
+```bash
+awk 'BEGIN { found=0 } /^$/ {found=0} /^Package: my-package$/ {found=1} /^Version: / {if (found) {print $2; exit}}' /usr/lib/opkg/status
+```
+

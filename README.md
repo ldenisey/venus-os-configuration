@@ -6,7 +6,7 @@ Various guides for Venus OS based devices, by the menu :
   * [Compile the kernel on your device](docs/VenusOS-Kernel_local_compilation.md)
   * [Reset Venus OS firmware](docs/GuiV2-Reset_Venus_OS.md)
   * [Using opkg, the package manager](docs/VenusOS-Opkg_configuration.md)
-  * [Make modifications persistent to firmware upgrades](https://github.com/ldenisey/venus-os-mod-persist/blob/main/README.md)
+  * [Make modifications persistent to firmware upgrades](https://github.com/ldenisey/venus-os-mod-persist/tree/main)
 
 
 * Certificates
