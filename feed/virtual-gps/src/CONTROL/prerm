@@ -1,17 +1,14 @@
 #!/bin/sh
 set -e
 if [ -z "$D" ]; then
-  # Stop services to avoid a reboot
+  echo "Stopping virtual-gps services"
   svc -d /service/virtual-gps-start
   svc -d /service/virtual-gps-udp-redirect
   sleep 1
+
+  echo "Deleting virtual-gps services and logs"
   rm -R /service/virtual-gps-start
   rm -R /service/virtual-gps-udp-redirect
-
-  # Remove conf file
-  rm -r /data/etc/virtual-gps
-
-  # Clear logs
   rm -R /var/log/virtual-gps-start
   rm -R /var/log/virtual-gps-udp-redirect
 fi

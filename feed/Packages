@@ -3,26 +3,27 @@ Version: 1.0.0
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 0ab907fc39d3ecd9a105a7c552ebfeb9
-Size: 1998
+MD5Sum: 3dec4571258a07eb7c6fa7749eeded5e
+Size: 2166
 Filename: blank-display-device_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/blank-display-device
 Description: Utility script enabling Venus OS Gui V2 sleep function on third party touchscreens
-OE: blank-display-device
+HomePage: https://github.com/ldenisey/venus-os-configuration/blob/main/docs/Touchscreen-Sleep.md#gui-v2-workaround
 License: MIT
 Priority: optional
 
 Package: dbus-ble-sensors-py
 Version: 1.0.0
+Depends: dbus-1, dbus-tools, daemontools, python3-core, python3-pygobject, python3-dbus, bluez5
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: e11e06c1b0cb63882659b36c7bba1985
-Size: 29340
+MD5Sum: f10e4e94dfd606319a638dbf13c4d833
+Size: 180204
 Filename: dbus-ble-sensors-py_1.0.0_all.ipk
-Source: https://github.com/ldenisey/dbus-ble-sensors-py
+Source: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices
-OE: dbus-ble-devices
+HomePage: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
 License: MIT
 Priority: optional
 
@@ -33,13 +34,12 @@ Provides: kernel-module-hid-multitouch
 Section: kernel
 Architecture: einstein
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 1a3c0e14f6cf10aaf35e9e2345339b0d
-Size: 11942
+MD5Sum: c9d0387cfbafc76a2778ba6b217ddaaf
+Size: 12038
 Filename: kernel-module-hid-multitouch-5.10.109-venus-17_5.10.109-venus-17-r0_einstein.ipk
 Description: hid multitouch kernel module
-OE: linux-venus
 HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-5.10.109-venus-17
-License: GPL-2.0-only
+License: MIT
 Priority: optional
 
 Package: kernel-module-hid-multitouch-6.12.23-venus-4
@@ -49,13 +49,12 @@ Provides: kernel-module-hid-multitouch
 Section: kernel
 Architecture: einstein
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: a025684d7ea0b15bebfe085c9173b7eb
-Size: 13280
+MD5Sum: bbf434087fc2452cae94e7f4c45d71e2
+Size: 13380
 Filename: kernel-module-hid-multitouch-6.12.23-venus-4_6.12.23-venus-4-r0_einstein.ipk
 Description: hid multitouch kernel module
-OE: linux-venus
 HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-4
-License: GPL-2.0-only
+License: MIT
 Priority: optional
 
 Package: kernel-module-hid-multitouch-6.12.23-venus-5
@@ -65,41 +64,40 @@ Provides: kernel-module-hid-multitouch
 Section: kernel
 Architecture: einstein
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: ab6a1fdfbc36037baf06ca07e4506c35
-Size: 13278
+MD5Sum: 7395c9d7f989435f13f05d0de25e6a47
+Size: 13380
 Filename: kernel-module-hid-multitouch-6.12.23-venus-5_6.12.23-venus-5-r0_einstein.ipk
 Description: hid multitouch kernel module
-OE: linux-venus
 HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-5
-License: GPL-2.0-only
+License: MIT
 Priority: optional
 
 Package: mod-persist
-Version: 1.0.0
-Depends: opkg
+Version: 1.0.1
+Depends: opkg, daemontools
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: cb028aeca10aa4d18f53740d425f2ec1
-Size: 4686
-Filename: mod-persist_1.0.0_all.ipk
-Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/mod-persist
+MD5Sum: 65b35a7c6f397277963bf9d64e7f1dc2
+Size: 4690
+Filename: mod-persist_1.0.1_all.ipk
+Source: https://github.com/ldenisey/venus-os-mod-persist
 Description: User modification persistence utility package
-OE: mod-persist
+HomePage: https://github.com/ldenisey/venus-os-mod-persist
 License: MIT
 Priority: optional
 
 Package: virtual-gps
-Version: 1.0.0
+Version: 1.0.1
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 1713b347b301d387a1989a0f3818d0bd
-Size: 1850
-Filename: virtual-gps_1.0.0_all.ipk
+MD5Sum: 56bab855072524b5a0c3f76c5b2a9623
+Size: 2012
+Filename: virtual-gps_1.0.1_all.ipk
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/virtual-gps
 Description: Venus OS virtual GPS using NMEA network stream
-OE: virtual-gps
+HomePage: https://github.com/ldenisey/venus-os-configuration/blob/main/docs/GPS-Stream_data_from_network.md
 License: MIT
 Priority: optional
 

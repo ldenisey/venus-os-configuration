@@ -7,5 +7,5 @@ Priority: optional
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
 License: MIT
 Architecture: all
-OE: blank-display-device
+Homepage: https://github.com/ldenisey/venus-os-configuration/blob/main/docs/Touchscreen-Sleep.md#gui-v2-workaround
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/blank-display-device

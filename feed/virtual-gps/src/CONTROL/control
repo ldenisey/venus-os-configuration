@@ -1,5 +1,5 @@
 Package: virtual-gps
-Version: 1.0.0
+Version: 1.0.1
 Description: Venus OS virtual GPS using NMEA network stream
  Venus OS virtual GPS using NMEA network stream
 Section: utilities
@@ -7,5 +7,5 @@ Priority: optional
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
 License: MIT
 Architecture: all
-OE: virtual-gps
+Homepage: https://github.com/ldenisey/venus-os-configuration/blob/main/docs/GPS-Stream_data_from_network.md
 Source: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/virtual-gps
