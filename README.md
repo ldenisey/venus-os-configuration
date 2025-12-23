@@ -2,6 +2,16 @@
 
 Various guides for Venus OS based devices, by the menu :
 
+* Third party touchscreens
+  * [Main configurations](docs/Touchscreen-Configuration.md)
+  * [Installating multitouch driver](docs/Touchscreen-Multitouch_driver.md)
+  * [Configuring screen sleep](docs/Touchscreen-Sleep.md)
+
+
+* Bluetooth
+  * [Third party sensors support](https://github.com/ldenisey/venus-os-dbus-ble-sensors-py)
+
+
 * Venus OS
   * [Compile the kernel on your device](docs/VenusOS-Kernel_local_compilation.md)
   * [Reset Venus OS firmware](docs/GuiV2-Reset_Venus_OS.md)
@@ -20,12 +30,6 @@ Various guides for Venus OS based devices, by the menu :
   * [Enable/disable Multiplus battery charge with a physical switch](docs/NodeRED-Flows.md#multiplus-passthrough-switch)
 
 
-* Third party touchscreens
-  * [Main configurations](docs/Touchscreen-Configuration.md)
-  * [Installating multitouch driver](docs/Touchscreen-Multitouch_driver.md)
-  * [Configuring screen sleep](docs/Touchscreen-Sleep.md)
-
-
 * GPS
   * [Set a GPS data stream from local network](docs/GPS-Stream_data_from_network.md)
 
@@ -37,6 +41,7 @@ Various guides for Venus OS based devices, by the menu :
 * Truma gaz regulators
   * [Connect DuoC tank level sensor](docs/Truma-DuoC_tank_level_sensor_connection.md)
   * [Connect EisEx heater](docs/Truma-EisEx_connection.md)
+  * [Connect resistive wired manometer](docs/LPG-Manometer_installation.md)
 
 
 If I saved you some time and made your day better, [consider buying me a coffee :-)](https://buymeacoffee.com/ldeniseyw)
