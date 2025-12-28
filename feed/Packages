@@ -18,8 +18,8 @@ Depends: dbus-1, dbus-tools, daemontools, python3-core, python3-pygobject, pytho
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: f10e4e94dfd606319a638dbf13c4d833
-Size: 180204
+MD5Sum: 2025617aca236ffd7c59bd498ec57cde
+Size: 184198
 Filename: dbus-ble-sensors-py_1.0.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices
@@ -73,14 +73,14 @@ License: MIT
 Priority: optional
 
 Package: mod-persist
-Version: 1.0.1
+Version: 1.1.0
 Depends: opkg, daemontools
 Section: utilities
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 65b35a7c6f397277963bf9d64e7f1dc2
-Size: 4690
-Filename: mod-persist_1.0.1_all.ipk
+MD5Sum: ef0241b448053aea1d6bf4025d8584d6
+Size: 4710
+Filename: mod-persist_1.1.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-mod-persist
 Description: User modification persistence utility package
 HomePage: https://github.com/ldenisey/venus-os-mod-persist
