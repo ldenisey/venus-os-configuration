@@ -13,14 +13,14 @@ License: MIT
 Priority: optional
 
 Package: dbus-ble-sensors-py
-Version: 1.0.0
+Version: 1.1.0
 Depends: dbus-1, dbus-tools, daemontools, python3-core, python3-pygobject, python3-dbus, bluez5
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 2025617aca236ffd7c59bd498ec57cde
-Size: 184198
-Filename: dbus-ble-sensors-py_1.0.0_all.ipk
+MD5Sum: 4974e692791ab5c65e6ecd9f8335e39c
+Size: 233218
+Filename: dbus-ble-sensors-py_1.1.0_all.ipk
 Source: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices
 HomePage: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
