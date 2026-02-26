@@ -13,14 +13,14 @@ License: MIT
 Priority: optional
 
 Package: dbus-ble-sensors-py
-Version: 1.1.0
+Version: 1.1.1
 Depends: dbus-1, dbus-tools, daemontools, python3-core, python3-pygobject, python3-dbus, bluez5
 Section: base
 Architecture: all
 Maintainer: Lucien Denisey <ldenisey@gmail.com>
-MD5Sum: 4974e692791ab5c65e6ecd9f8335e39c
-Size: 233218
-Filename: dbus-ble-sensors-py_1.1.0_all.ipk
+MD5Sum: 13f1a9952c229ad1d32537e5e055f178
+Size: 234606
+Filename: dbus-ble-sensors-py_1.1.1_all.ipk
 Source: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
 Description: Add support to unsupported bluetooth devices
 HomePage: https://github.com/ldenisey/venus-os-dbus-ble-sensors-py
@@ -69,6 +69,21 @@ Size: 13380
 Filename: kernel-module-hid-multitouch-6.12.23-venus-5_6.12.23-venus-5-r0_einstein.ipk
 Description: hid multitouch kernel module
 HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-5
+License: MIT
+Priority: optional
+
+Package: kernel-module-hid-multitouch-6.12.23-venus-8
+Version: 6.12.23-venus-8-r0
+Depends: kernel-6.12.23-venus-8
+Provides: kernel-module-hid-multitouch
+Section: kernel
+Architecture: einstein
+Maintainer: Lucien Denisey <ldenisey@gmail.com>
+MD5Sum: 6a20cfa68d913b137170834abe1558f7
+Size: 13380
+Filename: kernel-module-hid-multitouch-6.12.23-venus-8_6.12.23-venus-8-r0_einstein.ipk
+Description: hid multitouch kernel module
+HomePage: https://github.com/ldenisey/venus-os-configuration/tree/main/feed/kernel-module-hid-multitouch-6.12.23-venus-8
 License: MIT
 Priority: optional
 
